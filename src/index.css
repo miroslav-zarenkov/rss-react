@@ -14,10 +14,11 @@ body {
 }
 
 .header {
-  width: 100%;
+  width: 90%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  gap: 10px;
 }
 
 .main {
@@ -25,5 +26,9 @@ body {
   border-top: 1px solid black;
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  width: 90%;
+}
+
+button {
+  width: 100px;
 }

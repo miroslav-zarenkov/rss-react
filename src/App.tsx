@@ -10,7 +10,12 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.handleClick();
+    const storedPlanets = localStorage.getItem('planetsData');
+    if (storedPlanets) {
+      this.setState({ planets: JSON.parse(storedPlanets) });
+    } else {
+      this.handleClick();
+    }
   }
 
   handleClick = async () => {
@@ -19,14 +24,13 @@ class App extends Component {
       : 'https://swapi.dev/api/planets/';
     this.setState({ isButtonDisabled: true });
     localStorage.setItem('searchInput', this.state.inputValue);
-    console.log(localStorage);
     try {
       const response = await fetch(url, {
         method: 'GET',
       });
       const planets = await response.json();
       this.setState({ planets: planets.results });
-      console.log(planets.results);
+      localStorage.setItem('planetsData', JSON.stringify(planets.results));
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -48,7 +52,10 @@ class App extends Component {
           isButtonDisabled={this.state.isButtonDisabled}
           inputValue={this.state.inputValue}
         />
-        <Content planets={this.state.planets} />
+        <Content
+          planets={this.state.planets}
+          isButtonDisabled={this.state.isButtonDisabled}
+        />
       </>
     );
   }

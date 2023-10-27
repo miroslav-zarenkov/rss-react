@@ -1,35 +1,57 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { ChangeEvent, Component } from 'react';
+import Header from './Header';
+import Content from './Content';
 
-function App() {
-  const [count, setCount] = useState(0);
+class App extends Component {
+  state = {
+    inputValue: localStorage.getItem('searchInput') ?? '',
+    isButtonDisabled: false,
+    planets: null,
+  };
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  componentDidMount() {
+    this.handleClick();
+  }
+
+  handleClick = async () => {
+    const url = this.state.inputValue
+      ? `https://swapi.dev/api/planets/?search=${this.state.inputValue}`
+      : 'https://swapi.dev/api/planets/';
+    this.setState({ isButtonDisabled: true });
+    localStorage.setItem('searchInput', this.state.inputValue);
+    console.log(localStorage);
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+      });
+      const planets = await response.json();
+      this.setState({ planets: planets.results });
+      console.log(planets.results);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      this.setState({ isButtonDisabled: false });
+    }
+  };
+
+  handleInput = (event: ChangeEvent) => {
+    const value = (event.target as HTMLInputElement)?.value;
+    this.setState({ inputValue: value });
+  };
+
+  render() {
+    return (
+      <>
+        <Header
+          handleClick={this.handleClick}
+          handleInput={this.handleInput}
+          isButtonDisabled={this.state.isButtonDisabled}
+          inputValue={this.state.inputValue}
+        />
+        <Content planets={this.state.planets} />
+      </>
+    );
+  }
 }
 
 export default App;

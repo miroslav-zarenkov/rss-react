@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import BeerCard from './BeerCard';
+import Image404 from '../public/404.jpg';
 
 interface ContentProps {
   beers: Array<{ name: string; image_url: string; tagline: string }> | null;
@@ -29,11 +30,7 @@ class Content extends Component<ContentProps> {
     }
     return (
       <main className="main">
-        <img
-          className="img-error-404"
-          src="../public/404.jpg"
-          alt="Error 404"
-        />
+        <img className="img-error-404" src={Image404} alt="Error 404" />
         <h2>Error 404</h2>
         <div>Beer not found</div>
       </main>

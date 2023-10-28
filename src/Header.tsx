@@ -1,5 +1,5 @@
 import { ChangeEvent, Component } from 'react';
-import Button from './Button';
+import SearchButton from './SearchButton';
 import Input from './Input';
 import ErrorButton from './ErrorButton';
 
@@ -16,8 +16,12 @@ class Header extends Component<HeaderProps> {
       this.props;
     return (
       <header className="header">
+        <h1>Star Wars Planets</h1>
         <Input handleInput={handleInput} inputValue={inputValue} />
-        <Button handleClick={handleClick} isButtonDisabled={isButtonDisabled} />
+        <SearchButton
+          handleClick={handleClick}
+          isButtonDisabled={isButtonDisabled}
+        />
         <ErrorButton />
       </header>
     );

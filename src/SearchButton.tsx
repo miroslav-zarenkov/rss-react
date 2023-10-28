@@ -1,19 +1,23 @@
 import { Component } from 'react';
 
-interface ButtonProps {
+interface SearchButtonProps {
   handleClick: () => void;
   isButtonDisabled: boolean;
 }
 
-class Button extends Component<ButtonProps> {
+class SearchButton extends Component<SearchButtonProps> {
   render() {
     const { handleClick, isButtonDisabled } = this.props;
     return (
-      <button onClick={handleClick} disabled={isButtonDisabled}>
+      <button
+        className="button search"
+        onClick={handleClick}
+        disabled={isButtonDisabled}
+      >
         {isButtonDisabled ? 'Searching...' : 'Search'}
       </button>
     );
   }
 }
 
-export default Button;
+export default SearchButton;

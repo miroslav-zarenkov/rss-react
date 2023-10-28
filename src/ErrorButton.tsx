@@ -23,7 +23,11 @@ class ErrorButton extends Component<ErrorButtonProps, State> {
     if (this.state.hasError) {
       throw new Error('I crashed!');
     }
-    return <button onClick={this.handleClick}>Throw Error</button>;
+    return (
+      <button className="button error" onClick={this.handleClick}>
+        Throw Error
+      </button>
+    );
   }
 }
 

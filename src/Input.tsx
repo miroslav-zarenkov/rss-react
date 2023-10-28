@@ -11,7 +11,7 @@ class Input extends Component<InputProps> {
     return (
       <input
         type="text"
-        placeholder="Search Planet"
+        placeholder="Search Beers"
         onChange={handleInput}
         value={inputValue}
       ></input>

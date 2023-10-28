@@ -6,31 +6,33 @@ class App extends Component {
   state = {
     inputValue: localStorage.getItem('searchInput') ?? '',
     isButtonDisabled: false,
-    planets: null,
+    beers: null,
   };
 
   componentDidMount() {
-    const storedPlanets = localStorage.getItem('planetsData');
-    if (storedPlanets) {
-      this.setState({ planets: JSON.parse(storedPlanets) });
+    const storedBeers = localStorage.getItem('beersData');
+    if (storedBeers) {
+      this.setState({ beers: JSON.parse(storedBeers) });
     } else {
       this.handleClick();
     }
   }
 
   handleClick = async () => {
+    const trimmedValue = this.state.inputValue.trim();
     const url = this.state.inputValue
-      ? `https://swapi.dev/api/planets/?search=${this.state.inputValue}`
-      : 'https://swapi.dev/api/planets/';
+      ? `https://api.punkapi.com/v2/beers?beer_name=${trimmedValue}`
+      : 'https://api.punkapi.com/v2/beers';
     this.setState({ isButtonDisabled: true });
-    localStorage.setItem('searchInput', this.state.inputValue);
+    localStorage.setItem('searchInput', trimmedValue);
     try {
+      this.setState({ inputValue: trimmedValue });
       const response = await fetch(url, {
         method: 'GET',
       });
-      const planets = await response.json();
-      this.setState({ planets: planets.results });
-      localStorage.setItem('planetsData', JSON.stringify(planets.results));
+      const beers = await response.json();
+      this.setState({ beers: beers });
+      localStorage.setItem('beersData', JSON.stringify(beers));
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -53,7 +55,7 @@ class App extends Component {
           inputValue={this.state.inputValue}
         />
         <Content
-          planets={this.state.planets}
+          beers={this.state.beers}
           isButtonDisabled={this.state.isButtonDisabled}
         />
       </>

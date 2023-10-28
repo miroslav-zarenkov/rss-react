@@ -6,6 +6,13 @@ interface SearchButtonProps {
 }
 
 class SearchButton extends Component<SearchButtonProps> {
+  handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.props.handleClick();
+    }
+  };
+
   render() {
     const { handleClick, isButtonDisabled } = this.props;
     return (
@@ -13,6 +20,8 @@ class SearchButton extends Component<SearchButtonProps> {
         className="button search"
         onClick={handleClick}
         disabled={isButtonDisabled}
+        onKeyDown={this.handleKeyPress}
+        type="submit"
       >
         {isButtonDisabled ? 'Searching...' : 'Search'}
       </button>

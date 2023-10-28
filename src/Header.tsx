@@ -16,12 +16,14 @@ class Header extends Component<HeaderProps> {
       this.props;
     return (
       <header className="header">
-        <h1>Star Wars Planets</h1>
-        <Input handleInput={handleInput} inputValue={inputValue} />
-        <SearchButton
-          handleClick={handleClick}
-          isButtonDisabled={isButtonDisabled}
-        />
+        <h1>Beer Сatalog</h1>
+        <form action="" className="search-form">
+          <Input handleInput={handleInput} inputValue={inputValue} />
+          <SearchButton
+            handleClick={handleClick}
+            isButtonDisabled={isButtonDisabled}
+          />
+        </form>
         <ErrorButton />
       </header>
     );

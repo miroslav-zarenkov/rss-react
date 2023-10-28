@@ -1,29 +1,27 @@
 import { Component } from 'react';
-import PlanetCard from './PlanetCard';
+import BeerCard from './BeerCard';
 
 interface ContentProps {
-  planets: Array<{ name: string; climate: string; population: string }> | null;
+  beers: Array<{ name: string; image_url: string; tagline: string }> | null;
   isButtonDisabled: boolean;
 }
 
 class Content extends Component<ContentProps> {
   render() {
-    const { planets, isButtonDisabled } = this.props;
+    const { beers, isButtonDisabled } = this.props;
     if (isButtonDisabled) {
       return (
         <main className="main">
-          <h2>Planet Data:</h2>
           <div>Searching...</div>
         </main>
       );
     }
-    if (planets && planets.length > 0) {
+    if (beers && beers.length > 0) {
       return (
         <main className="main">
-          <h2>Planet Data:</h2>
-          <div className="planets-data">
-            {planets.map((planet, index) => (
-              <PlanetCard key={index} planet={planet} />
+          <div className="beers-data">
+            {beers.map((beer, index) => (
+              <BeerCard key={index} beer={beer} />
             ))}
           </div>
         </main>
@@ -31,8 +29,13 @@ class Content extends Component<ContentProps> {
     }
     return (
       <main className="main">
-        <h2>Planet Data:</h2>
-        <div>Not Found</div>
+        <img
+          className="img-error-404"
+          src="../public/404.jpg"
+          alt="Error 404"
+        />
+        <h2>Error 404</h2>
+        <div>Beer not found</div>
       </main>
     );
   }

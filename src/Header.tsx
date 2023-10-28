@@ -1,6 +1,7 @@
 import { ChangeEvent, Component } from 'react';
 import Button from './Button';
 import Input from './Input';
+import ErrorButton from './ErrorButton';
 
 interface HeaderProps {
   handleInput: (event: ChangeEvent) => void;
@@ -17,6 +18,7 @@ class Header extends Component<HeaderProps> {
       <header className="header">
         <Input handleInput={handleInput} inputValue={inputValue} />
         <Button handleClick={handleClick} isButtonDisabled={isButtonDisabled} />
+        <ErrorButton />
       </header>
     );
   }

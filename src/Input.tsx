@@ -7,12 +7,13 @@ interface InputProps {
 
 class Input extends Component<InputProps> {
   render() {
+    const { handleInput, inputValue } = this.props;
     return (
       <input
         type="text"
-        placeholder="input"
-        onChange={this.props.handleInput}
-        value={this.props.inputValue}
+        placeholder="Search Planet"
+        onChange={handleInput}
+        value={inputValue}
       ></input>
     );
   }

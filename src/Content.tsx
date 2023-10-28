@@ -1,23 +1,38 @@
 import { Component } from 'react';
+import PlanetCard from './PlanetCard';
 
 interface ContentProps {
-  planets: object | null;
+  planets: Array<{ name: string; climate: string; population: string }> | null;
   isButtonDisabled: boolean;
 }
 
 class Content extends Component<ContentProps> {
   render() {
-    const planetsString = JSON.stringify(this.props.planets, null, 1);
+    const { planets, isButtonDisabled } = this.props;
+    if (isButtonDisabled) {
+      return (
+        <main className="main">
+          <h2>Planet Data:</h2>
+          <div>Searching...</div>
+        </main>
+      );
+    }
+    if (planets && planets.length > 0) {
+      return (
+        <main className="main">
+          <h2>Planet Data:</h2>
+          <div className="planets-data">
+            {planets.map((planet, index) => (
+              <PlanetCard key={index} planet={planet} />
+            ))}
+          </div>
+        </main>
+      );
+    }
     return (
       <main className="main">
         <h2>Planet Data:</h2>
-        <div>
-          {this.props.isButtonDisabled
-            ? 'Searching...'
-            : planetsString.length === 2
-            ? 'Not Found'
-            : planetsString}
-        </div>
+        <div>Not Found</div>
       </main>
     );
   }

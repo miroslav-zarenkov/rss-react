@@ -7,12 +7,10 @@ interface ButtonProps {
 
 class Button extends Component<ButtonProps> {
   render() {
+    const { handleClick, isButtonDisabled } = this.props;
     return (
-      <button
-        onClick={this.props.handleClick}
-        disabled={this.props.isButtonDisabled}
-      >
-        {this.props.isButtonDisabled ? 'Searching...' : 'Search'}
+      <button onClick={handleClick} disabled={isButtonDisabled}>
+        {isButtonDisabled ? 'Searching...' : 'Search'}
       </button>
     );
   }

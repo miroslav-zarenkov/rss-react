@@ -11,16 +11,12 @@ interface HeaderProps {
 
 class Header extends Component<HeaderProps> {
   render() {
+    const { handleInput, inputValue, handleClick, isButtonDisabled } =
+      this.props;
     return (
       <header className="header">
-        <Input
-          handleInput={this.props.handleInput}
-          inputValue={this.props.inputValue}
-        />
-        <Button
-          handleClick={this.props.handleClick}
-          isButtonDisabled={this.props.isButtonDisabled}
-        />
+        <Input handleInput={handleInput} inputValue={inputValue} />
+        <Button handleClick={handleClick} isButtonDisabled={isButtonDisabled} />
       </header>
     );
   }

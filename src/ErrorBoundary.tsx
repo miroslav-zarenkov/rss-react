@@ -15,6 +15,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
     this.state = { error: null, errorInfo: null };
   }
 
+  handleClick() {
+    location.reload();
+  }
+
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({
       error: error,
@@ -29,6 +33,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
           <h2>Something went wrong.</h2>
           <div>{this.state.error && this.state.error.toString()}</div>
           <div>{this.state.errorInfo.componentStack}</div>
+          <button className="button" onClick={this.handleClick}>
+            Reload Page
+          </button>
         </div>
       );
     }

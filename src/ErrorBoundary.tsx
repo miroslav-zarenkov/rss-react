@@ -32,7 +32,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
         <div className="error-boundary">
           <h2>Something went wrong.</h2>
           <div>{this.state.error && this.state.error.toString()}</div>
-          <div>{this.state.errorInfo.componentStack}</div>
           <button className="button" onClick={this.handleClick}>
             Reload Page
           </button>

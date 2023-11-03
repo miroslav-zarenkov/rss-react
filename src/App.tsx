@@ -1,66 +1,61 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Header from './Header';
 import Content from './Content';
 
-class App extends Component {
-  state = {
-    inputValue: localStorage.getItem('searchInput') ?? '',
-    isButtonDisabled: false,
-    beers: null,
-  };
+function App() {
+  const [inputValue, setInputValue] = useState(
+    localStorage.getItem('searchInput') ?? ''
+  );
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [beers, setBeers] = useState(null);
 
-  componentDidMount() {
-    const storedBeers = localStorage.getItem('beersData');
-    if (storedBeers) {
-      this.setState({ beers: JSON.parse(storedBeers) });
-    } else {
-      this.handleClick();
-    }
-  }
-
-  handleClick = async () => {
-    const trimmedValue = this.state.inputValue.trim();
-    const url = this.state.inputValue
+  const handleClick = useCallback(async () => {
+    const trimmedValue = inputValue.trim();
+    const url = inputValue
       ? `https://api.punkapi.com/v2/beers?beer_name=${trimmedValue}`
       : 'https://api.punkapi.com/v2/beers';
-    this.setState({ isButtonDisabled: true });
+    setIsButtonDisabled(true);
     localStorage.setItem('searchInput', trimmedValue);
     try {
-      this.setState({ inputValue: trimmedValue });
+      setInputValue(trimmedValue);
       const response = await fetch(url, {
         method: 'GET',
       });
       const beers = await response.json();
-      this.setState({ beers: beers });
+      setBeers(beers);
       localStorage.setItem('beersData', JSON.stringify(beers));
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      this.setState({ isButtonDisabled: false });
+      setIsButtonDisabled(false);
     }
-  };
+  }, [inputValue]);
 
-  handleInput = (event: ChangeEvent) => {
+  const handleInput = (event: ChangeEvent) => {
     const value = (event.target as HTMLInputElement)?.value;
-    this.setState({ inputValue: value });
+    setInputValue(value);
   };
 
-  render() {
-    return (
-      <>
-        <Header
-          handleClick={this.handleClick}
-          handleInput={this.handleInput}
-          isButtonDisabled={this.state.isButtonDisabled}
-          inputValue={this.state.inputValue}
-        />
-        <Content
-          beers={this.state.beers}
-          isButtonDisabled={this.state.isButtonDisabled}
-        />
-      </>
-    );
-  }
+  useEffect(() => {
+    const storedBeers = localStorage.getItem('beersData');
+    if (storedBeers) {
+      setBeers(JSON.parse(storedBeers));
+    } else {
+      handleClick();
+    }
+  }, [handleClick]);
+
+  return (
+    <>
+      <Header
+        handleClick={handleClick}
+        handleInput={handleInput}
+        isButtonDisabled={isButtonDisabled}
+        inputValue={inputValue}
+      />
+      <Content beers={beers} isButtonDisabled={isButtonDisabled} />
+    </>
+  );
 }
 
 export default App;

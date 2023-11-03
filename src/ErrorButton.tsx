@@ -1,34 +1,21 @@
-import { Component, ReactNode } from 'react';
+import { useState } from 'react';
 
-interface ErrorButtonProps {
-  children?: ReactNode;
-}
+function ErrorButton() {
+  const [hasError, setHasError] = useState(false);
 
-interface State {
-  hasError: boolean;
-}
+  const handleClick = () => {
+    setHasError(true);
+  };
 
-class ErrorButton extends Component<ErrorButtonProps, State> {
-  constructor(props: ErrorButtonProps) {
-    super(props);
-    this.state = { hasError: false };
-    this.handleClick = this.handleClick.bind(this);
+  if (hasError) {
+    throw new Error('I crashed!');
   }
 
-  handleClick() {
-    this.setState({ hasError: true });
-  }
-
-  render() {
-    if (this.state.hasError) {
-      throw new Error('I crashed!');
-    }
-    return (
-      <button className="button error" onClick={this.handleClick}>
-        Throw Error
-      </button>
-    );
-  }
+  return (
+    <button className="button error" onClick={handleClick}>
+      Throw Error
+    </button>
+  );
 }
 
 export default ErrorButton;

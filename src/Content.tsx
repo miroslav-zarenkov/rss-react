@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import BeerCard from './BeerCard';
-import Image404 from '../public/404.jpg';
+import Image404 from './assets/images/404.jpg';
 
 interface ContentProps {
   beers: Array<{ name: string; image_url: string; tagline: string }> | null;

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import PlaceholderBeer from '../public/placeholder_beer.png';
+import PlaceholderBeer from './assets/images/placeholder_beer.png';
 
 interface BeerCardProps {
   beer: { name: string; image_url: string; tagline: string };

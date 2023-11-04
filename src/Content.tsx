@@ -1,4 +1,6 @@
 import BeerCard from './BeerCard';
+import Paginator from './Paginator';
+import SelectPages from './SelectPages';
 import Image404 from './assets/images/404.jpg';
 
 interface ContentProps {
@@ -17,11 +19,13 @@ function Content({ beers, isButtonDisabled }: ContentProps) {
   if (beers && beers.length > 0) {
     return (
       <main className="main">
+        <SelectPages />
         <div className="beers-data">
           {beers.map((beer, index) => (
             <BeerCard key={index} beer={beer} />
           ))}
         </div>
+        <Paginator />
       </main>
     );
   }

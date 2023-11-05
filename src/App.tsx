@@ -67,6 +67,7 @@ function App() {
         beers={beers}
         isButtonDisabled={isButtonDisabled}
         handleCardsPerPageChange={handleCardsPerPageChange}
+        cardsPerPage={cardsPerPage}
       />
     </>
   );

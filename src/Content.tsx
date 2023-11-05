@@ -7,12 +7,14 @@ interface ContentProps {
   beers: Array<{ name: string; image_url: string; tagline: string }> | null;
   isButtonDisabled: boolean;
   handleCardsPerPageChange: (string: string) => void;
+  cardsPerPage: string;
 }
 
 function Content({
   beers,
   isButtonDisabled,
   handleCardsPerPageChange,
+  cardsPerPage,
 }: ContentProps) {
   if (isButtonDisabled) {
     return (
@@ -30,7 +32,7 @@ function Content({
             <BeerCard key={index} beer={beer} />
           ))}
         </div>
-        <Paginator />
+        <Paginator cardsPerPage={cardsPerPage} />
       </main>
     );
   }

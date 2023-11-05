@@ -30,10 +30,6 @@ function App() {
         const fetchedProducts = await response.json();
         setTotalProducts(fetchedProducts.total);
         setProducts(fetchedProducts.products);
-        // localStorage.setItem(
-        //   'productsData',
-        //   JSON.stringify(fetchedProducts.products)
-        // );
       } catch (error) {
         console.error('Error:', error);
       } finally {

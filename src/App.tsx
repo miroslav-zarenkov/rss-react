@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Header from './Header';
 import Content from './Content';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -39,6 +39,11 @@ function App() {
     },
     [cardsPerPage, inputValue, navigate]
   );
+
+  useEffect(() => {
+    navigate('page/1');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCardsPerPageChange = (newCardsPerPage: string): void => {
     setCardsPerPage(newCardsPerPage);

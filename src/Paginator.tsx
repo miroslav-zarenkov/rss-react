@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 interface PaginatorProps {
   cardsPerPage: string;
   totalProducts: number;
@@ -9,6 +11,7 @@ function Paginator({
   totalProducts,
   handleClick,
 }: PaginatorProps) {
+  const navigate = useNavigate();
   const productsPerPage = parseInt(cardsPerPage, 10);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
   const pages = Array.from({ length: totalPages }, (_, index) =>
@@ -21,6 +24,7 @@ function Paginator({
           key={page}
           onClick={() => {
             handleClick(page);
+            navigate(`/page/${page}`);
           }}
         >
           Page {page}

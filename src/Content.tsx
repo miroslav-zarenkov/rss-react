@@ -33,7 +33,10 @@ function Content({
   if (products && products.length > 0) {
     return (
       <main className="main">
-        <SelectPages handleCardsPerPageChange={handleCardsPerPageChange} />
+        <SelectPages
+          handleCardsPerPageChange={handleCardsPerPageChange}
+          handleClick={handleClick}
+        />
         <div className="products-data">
           {products.map((product, index) => (
             <ProductCard key={index} product={product} />

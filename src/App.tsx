@@ -39,6 +39,7 @@ function App() {
     },
     [cardsPerPage, inputValue, navigate]
   );
+
   const handleCardsPerPageChange = (newCardsPerPage: string): void => {
     setCardsPerPage(newCardsPerPage);
   };

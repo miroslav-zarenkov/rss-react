@@ -36,18 +36,26 @@ function Details() {
   }
 
   return (
-    <div className="products-details">
-      <button onClick={handleClose}>Close</button>
-      {detailsData ? (
-        <div>
-          <h2>{detailsData.title}</h2>
-          <p>{detailsData.description}</p>
-          <img src={detailsData.thumbnail} alt={detailsData.title} />
-        </div>
-      ) : (
-        <div>No data available</div>
-      )}
-    </div>
+    <>
+      <div className="big" onClick={handleClose}></div>
+      <div
+        className="products-details"
+        onClick={(event) => {
+          event?.stopPropagation;
+        }}
+      >
+        <button onClick={handleClose}>Close</button>
+        {detailsData ? (
+          <div>
+            <h2>{detailsData.title}</h2>
+            <p>{detailsData.description}</p>
+            <img src={detailsData.thumbnail} alt={detailsData.title} />
+          </div>
+        ) : (
+          <div>No data available</div>
+        )}
+      </div>
+    </>
   );
 }
 export default Details;

@@ -39,6 +39,7 @@ function MainPage() {
         // navigate(`/page/${page}`);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cardsPerPage, inputValue, navigate]
   );
 

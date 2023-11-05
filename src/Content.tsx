@@ -6,9 +6,14 @@ import Image404 from './assets/images/404.jpg';
 interface ContentProps {
   beers: Array<{ name: string; image_url: string; tagline: string }> | null;
   isButtonDisabled: boolean;
+  handleCardsPerPageChange: (string: string) => void;
 }
 
-function Content({ beers, isButtonDisabled }: ContentProps) {
+function Content({
+  beers,
+  isButtonDisabled,
+  handleCardsPerPageChange,
+}: ContentProps) {
   if (isButtonDisabled) {
     return (
       <main className="main">
@@ -19,7 +24,7 @@ function Content({ beers, isButtonDisabled }: ContentProps) {
   if (beers && beers.length > 0) {
     return (
       <main className="main">
-        <SelectPages />
+        <SelectPages handleCardsPerPageChange={handleCardsPerPageChange} />
         <div className="beers-data">
           {beers.map((beer, index) => (
             <BeerCard key={index} beer={beer} />

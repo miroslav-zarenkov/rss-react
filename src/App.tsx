@@ -9,6 +9,7 @@ function App() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [products, setProducts] = useState(null);
   const [cardsPerPage, setCardsPerPage] = useState('5');
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const handleClick = useCallback(async () => {
     const trimmedValue = inputValue.trim();
@@ -23,7 +24,7 @@ function App() {
         method: 'GET',
       });
       const fetchedProducts = await response.json();
-      console.log(fetchedProducts.products);
+      setTotalProducts(fetchedProducts.total);
       setProducts(fetchedProducts.products);
       localStorage.setItem(
         'productsData',
@@ -72,6 +73,7 @@ function App() {
         isButtonDisabled={isButtonDisabled}
         handleCardsPerPageChange={handleCardsPerPageChange}
         cardsPerPage={cardsPerPage}
+        totalProducts={totalProducts}
       />
     </>
   );

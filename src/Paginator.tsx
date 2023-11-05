@@ -1,9 +1,9 @@
 interface PaginatorProps {
   cardsPerPage: string;
+  totalProducts: number;
 }
 
-function Paginator({ cardsPerPage }: PaginatorProps) {
-  const totalProducts = 325;
+function Paginator({ cardsPerPage, totalProducts }: PaginatorProps) {
   const productsPerPage = parseInt(cardsPerPage, 10);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);

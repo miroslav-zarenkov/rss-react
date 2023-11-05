@@ -9,7 +9,7 @@ function Input({ handleInput, inputValue }: InputProps) {
   return (
     <input
       type="text"
-      placeholder="Search Beers"
+      placeholder="Search Products"
       onChange={handleInput}
       value={inputValue}
     ></input>

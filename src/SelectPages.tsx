@@ -21,7 +21,7 @@ function SelectPages({ handleCardsPerPageChange }: SelectPagesProps) {
 
   return (
     <div className="pages-selector">
-      <label htmlFor="pages">Beers per page:</label>
+      <label htmlFor="pages">Products per page:</label>
       <select
         id="pages"
         name="pages"

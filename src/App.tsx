@@ -7,14 +7,14 @@ function App() {
     localStorage.getItem('searchInput') ?? ''
   );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [beers, setBeers] = useState(null);
+  const [products, setProducts] = useState(null);
   const [cardsPerPage, setCardsPerPage] = useState('5');
 
   const handleClick = useCallback(async () => {
     const trimmedValue = inputValue.trim();
     const url = inputValue
-      ? `https://api.punkapi.com/v2/beers?beer_name=${trimmedValue}&per_page=${cardsPerPage}`
-      : `https://api.punkapi.com/v2/beers?per_page=${cardsPerPage}`;
+      ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=${cardsPerPage}`
+      : `https://dummyjson.com/products?limit=${cardsPerPage}`;
     setIsButtonDisabled(true);
     localStorage.setItem('searchInput', trimmedValue);
     try {
@@ -22,9 +22,13 @@ function App() {
       const response = await fetch(url, {
         method: 'GET',
       });
-      const beers = await response.json();
-      setBeers(beers);
-      localStorage.setItem('beersData', JSON.stringify(beers));
+      const fetchedProducts = await response.json();
+      console.log(fetchedProducts.products);
+      setProducts(fetchedProducts.products);
+      localStorage.setItem(
+        'productsData',
+        JSON.stringify(fetchedProducts.products)
+      );
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -47,9 +51,9 @@ function App() {
   };
 
   useEffect(() => {
-    const storedBeers = localStorage.getItem('beersData');
-    if (storedBeers) {
-      setBeers(JSON.parse(storedBeers));
+    const storedProducts = localStorage.getItem('productsData');
+    if (storedProducts) {
+      setProducts(JSON.parse(storedProducts));
     } else {
       handleClick();
     }
@@ -64,7 +68,7 @@ function App() {
         inputValue={inputValue}
       />
       <Content
-        beers={beers}
+        products={products}
         isButtonDisabled={isButtonDisabled}
         handleCardsPerPageChange={handleCardsPerPageChange}
         cardsPerPage={cardsPerPage}

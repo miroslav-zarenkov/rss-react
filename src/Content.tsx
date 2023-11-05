@@ -1,17 +1,20 @@
-import BeerCard from './BeerCard';
+import ProductCard from './ProductCard';
 import Paginator from './Paginator';
 import SelectPages from './SelectPages';
-import Image404 from './assets/images/404.jpg';
 
 interface ContentProps {
-  beers: Array<{ name: string; image_url: string; tagline: string }> | null;
+  products: Array<{
+    title: string;
+    thumbnail: string;
+    description: string;
+  }> | null;
   isButtonDisabled: boolean;
   handleCardsPerPageChange: (string: string) => void;
   cardsPerPage: string;
 }
 
 function Content({
-  beers,
+  products,
   isButtonDisabled,
   handleCardsPerPageChange,
   cardsPerPage,
@@ -23,13 +26,13 @@ function Content({
       </main>
     );
   }
-  if (beers && beers.length > 0) {
+  if (products && products.length > 0) {
     return (
       <main className="main">
         <SelectPages handleCardsPerPageChange={handleCardsPerPageChange} />
-        <div className="beers-data">
-          {beers.map((beer, index) => (
-            <BeerCard key={index} beer={beer} />
+        <div className="products-data">
+          {products.map((product, index) => (
+            <ProductCard key={index} product={product} />
           ))}
         </div>
         <Paginator cardsPerPage={cardsPerPage} />
@@ -38,9 +41,8 @@ function Content({
   }
   return (
     <main className="main">
-      <img className="img-error-404" src={Image404} alt="Error 404" />
-      <h2>Error 404</h2>
-      <div>Beer not found</div>
+      <h2>Not Found</h2>
+      <div>There is no spoon</div>
     </main>
   );
 }

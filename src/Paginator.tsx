@@ -3,9 +3,9 @@ interface PaginatorProps {
 }
 
 function Paginator({ cardsPerPage }: PaginatorProps) {
-  const totalBeers = 325;
-  const beersPerPage = parseInt(cardsPerPage, 10);
-  const totalPages = Math.ceil(totalBeers / beersPerPage);
+  const totalProducts = 325;
+  const productsPerPage = parseInt(cardsPerPage, 10);
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
   return (
     <div className="paginator">

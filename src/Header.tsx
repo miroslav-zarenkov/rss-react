@@ -18,7 +18,7 @@ function Header({
 }: HeaderProps) {
   return (
     <header className="header">
-      <h1>Beer Сatalog</h1>
+      <h1>Dummy Products</h1>
       <form action="" className="search-form">
         <Input handleInput={handleInput} inputValue={inputValue} />
         <SearchButton

@@ -14,12 +14,9 @@ function SearchButton({ handleClick, isButtonDisabled }: SearchButtonProps) {
     }
   };
   const { pageNumber } = useParams();
-  console.log(pageNumber);
-  const loadData = () => {
-    handleClick(pageNumber ?? '1');
-  };
+
   useEffect(() => {
-    loadData();
+    handleClick(pageNumber ?? '1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -9,7 +9,9 @@ function App() {
   );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [products, setProducts] = useState(null);
-  const [cardsPerPage, setCardsPerPage] = useState('5');
+  const [cardsPerPage, setCardsPerPage] = useState(
+    localStorage.getItem('cardsPerPage') || '5'
+  );
   const [totalProducts, setTotalProducts] = useState(0);
   const navigate = useNavigate();
 

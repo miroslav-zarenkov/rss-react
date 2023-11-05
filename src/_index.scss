@@ -54,6 +54,7 @@ body {
   align-items: center;
   justify-content: center;
   .product-card {
+    word-break: break-all;
     width: 200px;
     height: 300px;
     padding: 5px;
@@ -70,6 +71,9 @@ body {
     text-align: center;
     transition: 0.33s cubic-bezier(0.3, 0, 0.5, 1);
     cursor: pointer;
+    img {
+      max-width: 100%;
+    }
     &:hover {
       transform: scale(1.033);
       transition: 0.33s cubic-bezier(0.3, 0, 0.5, 1);

@@ -11,31 +11,35 @@ function App() {
   const [cardsPerPage, setCardsPerPage] = useState('5');
   const [totalProducts, setTotalProducts] = useState(0);
 
-  const handleClick = useCallback(async () => {
-    const trimmedValue = inputValue.trim();
-    const url = inputValue
-      ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=${cardsPerPage}`
-      : `https://dummyjson.com/products?limit=${cardsPerPage}`;
-    setIsButtonDisabled(true);
-    localStorage.setItem('searchInput', trimmedValue);
-    try {
-      setInputValue(trimmedValue);
-      const response = await fetch(url, {
-        method: 'GET',
-      });
-      const fetchedProducts = await response.json();
-      setTotalProducts(fetchedProducts.total);
-      setProducts(fetchedProducts.products);
-      localStorage.setItem(
-        'productsData',
-        JSON.stringify(fetchedProducts.products)
-      );
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setIsButtonDisabled(false);
-    }
-  }, [cardsPerPage, inputValue]);
+  const handleClick = useCallback(
+    async (page = 1) => {
+      const skip = (page - 1) * parseInt(cardsPerPage, 10);
+      const trimmedValue = inputValue.trim();
+      const url = inputValue
+        ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=${cardsPerPage}&skip=${skip}`
+        : `https://dummyjson.com/products?limit=${cardsPerPage}&skip=${skip}`;
+      setIsButtonDisabled(true);
+      localStorage.setItem('searchInput', trimmedValue);
+      try {
+        setInputValue(trimmedValue);
+        const response = await fetch(url, {
+          method: 'GET',
+        });
+        const fetchedProducts = await response.json();
+        setTotalProducts(fetchedProducts.total);
+        setProducts(fetchedProducts.products);
+        localStorage.setItem(
+          'productsData',
+          JSON.stringify(fetchedProducts.products)
+        );
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsButtonDisabled(false);
+      }
+    },
+    [cardsPerPage, inputValue]
+  );
 
   const handleCardsPerPageChange = (newCardsPerPage: string): void => {
     setCardsPerPage(newCardsPerPage);
@@ -74,6 +78,7 @@ function App() {
         handleCardsPerPageChange={handleCardsPerPageChange}
         cardsPerPage={cardsPerPage}
         totalProducts={totalProducts}
+        handleClick={handleClick}
       />
     </>
   );

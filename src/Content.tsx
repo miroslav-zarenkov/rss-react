@@ -12,6 +12,7 @@ interface ContentProps {
   handleCardsPerPageChange: (string: string) => void;
   cardsPerPage: string;
   totalProducts: number;
+  handleClick: (page: number) => void;
 }
 
 function Content({
@@ -20,6 +21,7 @@ function Content({
   handleCardsPerPageChange,
   cardsPerPage,
   totalProducts,
+  handleClick,
 }: ContentProps) {
   if (isButtonDisabled) {
     return (
@@ -37,7 +39,11 @@ function Content({
             <ProductCard key={index} product={product} />
           ))}
         </div>
-        <Paginator cardsPerPage={cardsPerPage} totalProducts={totalProducts} />
+        <Paginator
+          cardsPerPage={cardsPerPage}
+          totalProducts={totalProducts}
+          handleClick={handleClick}
+        />
       </main>
     );
   }

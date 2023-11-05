@@ -14,7 +14,7 @@ function SearchButton({ handleClick, isButtonDisabled }: SearchButtonProps) {
   return (
     <button
       className="button search"
-      onClick={handleClick}
+      onClick={() => handleClick()}
       disabled={isButtonDisabled}
       onKeyDown={handleKeyPress}
       type="submit"

@@ -47,10 +47,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCardsPerPageChange = (newCardsPerPage: string): void => {
-    setCardsPerPage(newCardsPerPage);
-  };
-
   const handleInput = (event: ChangeEvent) => {
     const value = (event.target as HTMLInputElement)?.value;
     setInputValue(value);
@@ -73,7 +69,7 @@ function App() {
                 <Content
                   products={products}
                   isButtonDisabled={isButtonDisabled}
-                  handleCardsPerPageChange={handleCardsPerPageChange}
+                  setCardsPerPage={setCardsPerPage}
                   cardsPerPage={cardsPerPage}
                   totalProducts={totalProducts}
                   handleClick={handleClick}

@@ -1,6 +1,7 @@
 import ProductCard from './ProductCard';
 import Paginator from './Paginator';
 import SelectPages from './SelectPages';
+import { useEffect, useRef } from 'react';
 
 interface ContentProps {
   products: Array<{
@@ -9,7 +10,7 @@ interface ContentProps {
     description: string;
   }> | null;
   isButtonDisabled: boolean;
-  handleCardsPerPageChange: (string: string) => void;
+  setCardsPerPage: (string: string) => void;
   cardsPerPage: string;
   totalProducts: number;
   handleClick: (page: string) => void;
@@ -18,11 +19,20 @@ interface ContentProps {
 function Content({
   products,
   isButtonDisabled,
-  handleCardsPerPageChange,
+  setCardsPerPage,
   cardsPerPage,
   totalProducts,
   handleClick,
 }: ContentProps) {
+  const isMounted = useRef(false);
+  useEffect(() => {
+    if (isMounted.current) {
+      handleClick('1');
+    } else {
+      isMounted.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardsPerPage]);
   if (isButtonDisabled) {
     return (
       <main className="main">
@@ -33,10 +43,7 @@ function Content({
   if (products && products.length > 0) {
     return (
       <main className="main">
-        <SelectPages
-          handleCardsPerPageChange={handleCardsPerPageChange}
-          handleClick={handleClick}
-        />
+        <SelectPages setCardsPerPage={setCardsPerPage} />
         <div className="products-data">
           {products.map((product, index) => (
             <ProductCard key={index} product={product} />

@@ -1,27 +1,19 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface SelectPagesProps {
-  handleCardsPerPageChange: (string: string) => void;
-  handleClick: (page: string) => void;
+  setCardsPerPage: (string: string) => void;
 }
 
-function SelectPages({
-  handleCardsPerPageChange,
-  handleClick,
-}: SelectPagesProps) {
+function SelectPages({ setCardsPerPage }: SelectPagesProps) {
   const [selectedValue, setSelectedValue] = useState(
     localStorage.getItem('cardsPerPage') || '5'
   );
-
-  useEffect(() => {
-    handleCardsPerPageChange(selectedValue);
-  }, [handleCardsPerPageChange, selectedValue]);
 
   const handleSelectChange = (event: ChangeEvent) => {
     const newValue = (event.target as HTMLSelectElement)?.value;
     localStorage.setItem('cardsPerPage', newValue);
     setSelectedValue(newValue);
-    handleClick('1');
+    setCardsPerPage(newValue);
   };
 
   return (

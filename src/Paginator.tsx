@@ -1,7 +1,7 @@
 interface PaginatorProps {
   cardsPerPage: string;
   totalProducts: number;
-  handleClick: (page: number) => void;
+  handleClick: (page: string) => void;
 }
 
 function Paginator({
@@ -11,12 +11,18 @@ function Paginator({
 }: PaginatorProps) {
   const productsPerPage = parseInt(cardsPerPage, 10);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-  console.log(pages);
+  const pages = Array.from({ length: totalPages }, (_, index) =>
+    (index + 1).toString()
+  );
   return (
     <div className="paginator">
       {pages.map((page) => (
-        <button key={page} onClick={() => handleClick(page)}>
+        <button
+          key={page}
+          onClick={() => {
+            handleClick(page);
+          }}
+        >
           Page {page}
         </button>
       ))}

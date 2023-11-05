@@ -6,7 +6,7 @@ import ErrorButton from './ErrorButton';
 interface HeaderProps {
   handleInput: (event: ChangeEvent) => void;
   inputValue: string;
-  handleClick: () => void;
+  handleClick: (page: string) => void;
   isButtonDisabled: boolean;
 }
 

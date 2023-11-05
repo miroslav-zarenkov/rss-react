@@ -1,5 +1,5 @@
 interface SearchButtonProps {
-  handleClick: () => void;
+  handleClick: (page: string) => void;
   isButtonDisabled: boolean;
 }
 
@@ -7,19 +7,19 @@ function SearchButton({ handleClick, isButtonDisabled }: SearchButtonProps) {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleClick();
+      handleClick('1');
     }
   };
 
   return (
     <button
       className="button search"
-      onClick={() => handleClick()}
+      onClick={() => handleClick('1')}
       disabled={isButtonDisabled}
       onKeyDown={handleKeyPress}
       type="submit"
     >
-      {isButtonDisabled ? 'Searching...' : 'Search'}
+      {isButtonDisabled ? 'Loading...' : 'Search'}
     </button>
   );
 }

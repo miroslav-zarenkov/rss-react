@@ -12,7 +12,7 @@ interface ContentProps {
   handleCardsPerPageChange: (string: string) => void;
   cardsPerPage: string;
   totalProducts: number;
-  handleClick: (page: number) => void;
+  handleClick: (page: string) => void;
 }
 
 function Content({
@@ -26,7 +26,7 @@ function Content({
   if (isButtonDisabled) {
     return (
       <main className="main">
-        <div>Searching...</div>
+        <div className="loader"></div>
       </main>
     );
   }

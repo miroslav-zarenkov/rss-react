@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 interface SearchButtonProps {
   handleClick: (page: string) => void;
   isButtonDisabled: boolean;
@@ -10,6 +13,15 @@ function SearchButton({ handleClick, isButtonDisabled }: SearchButtonProps) {
       handleClick('1');
     }
   };
+  const { pageNumber } = useParams();
+  console.log(pageNumber);
+  const loadData = () => {
+    handleClick(pageNumber ?? '1');
+  };
+  useEffect(() => {
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <button

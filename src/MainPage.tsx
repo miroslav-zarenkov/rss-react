@@ -36,17 +36,11 @@ function MainPage() {
         console.error('Error:', error);
       } finally {
         setIsButtonDisabled(false);
-        // navigate(`/page/${page}`);
+        navigate(`/page/${page}`);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cardsPerPage, inputValue, navigate]
   );
-
-  // useEffect(() => {
-  //   navigate('page/1');
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const handleInput = (event: ChangeEvent) => {
     const value = (event.target as HTMLInputElement)?.value;

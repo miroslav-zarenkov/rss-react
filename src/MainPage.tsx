@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useState } from 'react';
 import Header from './Header';
 import Content from './Content';
 import { useNavigate } from 'react-router-dom';
+import DataContext from './DataContext';
 
 function MainPage() {
   const [inputValue, setInputValue] = useState(
@@ -47,23 +48,22 @@ function MainPage() {
     setInputValue(value);
   };
 
+  const contextValues = {
+    inputValue,
+    isButtonDisabled,
+    products,
+    cardsPerPage,
+    totalProducts,
+    handleInput,
+    handleClick,
+    setCardsPerPage,
+  };
+
   return (
-    <>
-      <Header
-        handleClick={handleClick}
-        handleInput={handleInput}
-        isButtonDisabled={isButtonDisabled}
-        inputValue={inputValue}
-      />
-      <Content
-        products={products}
-        isButtonDisabled={isButtonDisabled}
-        setCardsPerPage={setCardsPerPage}
-        cardsPerPage={cardsPerPage}
-        totalProducts={totalProducts}
-        handleClick={handleClick}
-      />
-    </>
+    <DataContext.Provider value={contextValues}>
+      <Header />
+      <Content />
+    </DataContext.Provider>
   );
 }
 

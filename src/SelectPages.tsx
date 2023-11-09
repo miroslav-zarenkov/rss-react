@@ -1,10 +1,8 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
+import DataContext from './DataContext';
 
-interface SelectPagesProps {
-  setCardsPerPage: (string: string) => void;
-}
-
-function SelectPages({ setCardsPerPage }: SelectPagesProps) {
+function SelectPages() {
+  const { setCardsPerPage } = useContext(DataContext);
   const [selectedValue, setSelectedValue] = useState(
     localStorage.getItem('cardsPerPage') || '5'
   );

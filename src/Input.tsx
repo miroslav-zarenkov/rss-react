@@ -1,11 +1,8 @@
-import { ChangeEvent } from 'react';
+import { useContext } from 'react';
+import DataContext from './DataContext';
 
-interface InputProps {
-  handleInput: (event: ChangeEvent) => void;
-  inputValue: string;
-}
-
-function Input({ handleInput, inputValue }: InputProps) {
+function Input() {
+  const { handleInput, inputValue } = useContext(DataContext);
   return (
     <input
       type="text"

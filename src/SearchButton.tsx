@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DataContext from './DataContext';
 
-interface SearchButtonProps {
-  handleClick: (page: string) => void;
-  isButtonDisabled: boolean;
-}
-
-function SearchButton({ handleClick, isButtonDisabled }: SearchButtonProps) {
+function SearchButton() {
+  const { handleClick, isButtonDisabled } = useContext(DataContext);
   const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();

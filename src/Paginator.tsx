@@ -1,16 +1,9 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DataContext from './DataContext';
 
-interface PaginatorProps {
-  cardsPerPage: string;
-  totalProducts: number;
-  handleClick: (page: string) => void;
-}
-
-function Paginator({
-  cardsPerPage,
-  totalProducts,
-  handleClick,
-}: PaginatorProps) {
+function Paginator() {
+  const { cardsPerPage, totalProducts, handleClick } = useContext(DataContext);
   const navigate = useNavigate();
   const productsPerPage = parseInt(cardsPerPage, 10);
   const totalPages = Math.ceil(totalProducts / productsPerPage);

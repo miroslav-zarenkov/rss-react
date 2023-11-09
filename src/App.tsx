@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainPage from './MainPage';
 import Details from './Details';
 import { useEffect } from 'react';
+import Error404 from './Error404';
 
 function App() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
       >
         <Route path="/page/:pageNumber/details/:id" element={<Details />} />
       </Route>
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 }

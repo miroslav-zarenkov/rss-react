@@ -44,6 +44,7 @@ function Details() {
           event?.stopPropagation;
         }}
       >
+        <h3>Detailed Card</h3>
         <button onClick={handleClose}>Close</button>
         {detailsData ? (
           <div>

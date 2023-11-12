@@ -16,6 +16,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       all: true,
+      exclude: ['src/main.tsx', 'src/DataContext.tsx', 'src/vite-env.d.ts'],
     },
   },
 });

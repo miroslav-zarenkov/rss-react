@@ -1,21 +1,24 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DataContext from './DataContext';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 
 function SearchButton() {
   const { handleClick, isButtonDisabled } = useContext(DataContext);
+  const { pageNumber } = useParams();
+  const reduxSearchTerm = useSelector((state: RootState) => state.search);
   const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleClick('1');
     }
   };
-  const { pageNumber } = useParams();
 
   useEffect(() => {
     handleClick(pageNumber ?? '1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reduxSearchTerm]);
 
   return (
     <button

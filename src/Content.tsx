@@ -16,8 +16,6 @@ function Content() {
       navigate('../');
       setDetailsAreClosed(true);
     }
-
-    console.log(detailsAreClosed);
   };
   useEffect(() => {
     if (isMounted.current) {

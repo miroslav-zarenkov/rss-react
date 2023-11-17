@@ -3,6 +3,7 @@ import Header from './Header';
 import Content from './Content';
 import { useNavigate } from 'react-router-dom';
 import DataContext from './DataContext';
+import fetchData from './api/fetchData';
 
 function MainPage() {
   const [inputValue, setInputValue] = useState(
@@ -18,21 +19,13 @@ function MainPage() {
 
   const handleClick = useCallback(
     async (page: string) => {
-      const skip = (parseInt(page, 10) - 1) * parseInt(cardsPerPage, 10);
-      const trimmedValue = inputValue.trim();
-      const url = inputValue
-        ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=${cardsPerPage}&skip=${skip}`
-        : `https://dummyjson.com/products?limit=${cardsPerPage}&skip=${skip}`;
       setIsButtonDisabled(true);
-      localStorage.setItem('searchInput', trimmedValue);
+      localStorage.setItem('searchInput', inputValue.trim());
       try {
-        setInputValue(trimmedValue);
-        const response = await fetch(url, {
-          method: 'GET',
-        });
-        const fetchedProducts = await response.json();
-        setTotalProducts(fetchedProducts.total);
-        setProducts(fetchedProducts.products);
+        setInputValue(inputValue.trim());
+        const data = await fetchData(page, cardsPerPage, inputValue);
+        setTotalProducts(data.total);
+        setProducts(data.products);
       } catch (error) {
         console.error('Error:', error);
       } finally {

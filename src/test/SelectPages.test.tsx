@@ -1,16 +1,20 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SelectPages from '../SelectPages';
-import DataContext from '../DataContext';
+import SelectPages from '../components/SelectPages/SelectPages';
+import DataContext from '../context/DataContext';
 
 const mockContext = {
-  products: [],
+  inputValue: '',
   isButtonDisabled: false,
-  setCardsPerPage: () => {},
+  products: null,
   cardsPerPage: '',
   totalProducts: 0,
-  handleClick: () => {},
-  inputValue: '',
-  handleInput: () => {},
+  currentPage: 1,
+  setInputValue: () => {},
+  setIsButtonDisabled: () => {},
+  setProducts: () => {},
+  setCardsPerPage: () => {},
+  setTotalProducts: () => {},
+  setCurrentPage: () => {},
 };
 
 it('should renders SelectPages and update cardsPerPage', async () => {

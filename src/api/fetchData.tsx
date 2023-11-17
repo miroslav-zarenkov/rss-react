@@ -1,6 +1,10 @@
 const BASE_URL = 'https://dummyjson.com/products';
 
-const fetchData = async (page = '1', cardsPerPage = '5', inputValue = '') => {
+const fetchData = async (
+  page: string,
+  cardsPerPage: string,
+  inputValue: string
+) => {
   const skip = (parseInt(page, 10) - 1) * parseInt(cardsPerPage, 10);
   const trimmedValue = inputValue.trim();
   const url = trimmedValue

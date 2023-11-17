@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DataContext from './DataContext';
+import DataContext from '../../context/DataContext';
+import styles from './Paginator.module.scss';
 
 function Paginator() {
-  const { cardsPerPage, totalProducts, handleClick } = useContext(DataContext);
+  const { cardsPerPage, totalProducts, setCurrentPage } =
+    useContext(DataContext);
   const navigate = useNavigate();
   const productsPerPage = parseInt(cardsPerPage, 10);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -11,12 +13,13 @@ function Paginator() {
     (index + 1).toString()
   );
   return (
-    <div className="paginator">
+    <div className={styles.paginator}>
       {pages.map((page) => (
         <button
+          className={styles.button}
           key={page}
           onClick={() => {
-            handleClick(page);
+            setCurrentPage(parseInt(page, 10));
             navigate(`/page/${page}`);
           }}
         >

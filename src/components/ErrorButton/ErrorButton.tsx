@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './ErrorButton.module.scss';
 
 function ErrorButton() {
   const [hasError, setHasError] = useState(false);
@@ -12,7 +13,10 @@ function ErrorButton() {
   }
 
   return (
-    <button className="button error" onClick={handleClick}>
+    <button
+      className={`${styles.button} ${styles.error}`}
+      onClick={handleClick}
+    >
       Throw Error
     </button>
   );

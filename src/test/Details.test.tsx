@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
-import DataContext from '../DataContext';
-import Header from '../Header';
-import Content from '../Content';
+import App from '../app/App';
+import DataContext from '../context/DataContext';
+import Header from '../components/Header/Header';
+import Content from '../components/Content/Content';
 
 it('should render details with the right info when clicking on card ', async () => {
   const user = userEvent.setup();
@@ -55,6 +55,8 @@ it('should close details when clicking on button', async () => {
 
 it('should display loading indicator while fetching data', async () => {
   const mockContext = {
+    inputValue: '',
+    isButtonDisabled: false,
     products: [
       {
         id: 1,
@@ -69,13 +71,15 @@ it('should display loading indicator while fetching data', async () => {
         description: 'Description 2',
       },
     ],
-    isButtonDisabled: true,
-    setCardsPerPage: () => {},
     cardsPerPage: '1',
     totalProducts: 2,
-    handleClick: () => {},
-    inputValue: '',
-    handleInput: () => {},
+    currentPage: 1,
+    setInputValue: () => {},
+    setIsButtonDisabled: () => {},
+    setProducts: () => {},
+    setCardsPerPage: () => {},
+    setTotalProducts: () => {},
+    setCurrentPage: () => {},
   };
   const { container } = render(
     <MemoryRouter>

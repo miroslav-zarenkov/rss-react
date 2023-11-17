@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styles from './Details.module.scss';
 
 interface DetailsData {
   title: string;
@@ -37,15 +38,14 @@ function Details() {
 
   return (
     <>
-      <div className="big" onClick={handleClose}></div>
+      <div className={styles.overlay} onClick={handleClose}></div>
       <div
-        className="products-details"
+        className={styles['products-details']}
         onClick={(event) => {
           event?.stopPropagation;
         }}
       >
         <h3>Detailed Card</h3>
-        <button onClick={handleClose}>Close</button>
         {detailsData ? (
           <div>
             <h2>{detailsData.title}</h2>
@@ -55,6 +55,9 @@ function Details() {
         ) : (
           <div>No data available</div>
         )}
+        <button className={styles.button} onClick={handleClose}>
+          Close
+        </button>
       </div>
     </>
   );

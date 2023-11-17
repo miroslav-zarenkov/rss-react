@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import ErrorButton from '../ErrorButton';
+import ErrorButton from '../components/ErrorButton/ErrorButton';
 import userEvent from '@testing-library/user-event';
-import ErrorBoundary from '../ErrorBoundary';
+import ErrorBoundary from '../providers/ErrorBoundary/ErrorBoundary';
 
 it('should render error text', async () => {
   const user = userEvent.setup();

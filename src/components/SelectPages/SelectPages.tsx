@@ -1,8 +1,11 @@
 import { ChangeEvent, useContext, useState } from 'react';
-import DataContext from './DataContext';
+import DataContext from '../../context/DataContext';
+import { useNavigate } from 'react-router-dom';
+import styles from './SelectPages.module.scss';
 
 function SelectPages() {
   const { setCardsPerPage } = useContext(DataContext);
+  const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState(
     localStorage.getItem('cardsPerPage') || '5'
   );
@@ -12,10 +15,11 @@ function SelectPages() {
     localStorage.setItem('cardsPerPage', newValue);
     setSelectedValue(newValue);
     setCardsPerPage(newValue);
+    navigate(`/page/1`);
   };
 
   return (
-    <div className="pages-selector">
+    <div className={styles['pages-selector']}>
       <label htmlFor="pages">Products per page:</label>
       <select
         id="pages"

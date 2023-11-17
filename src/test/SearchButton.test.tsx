@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import App from '../App';
+import App from '../app/App';
 
 it('should add data to local storage and update input value', async () => {
   const user = userEvent.setup();

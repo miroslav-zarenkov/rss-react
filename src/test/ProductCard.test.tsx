@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import ProductCard from '../ProductCard';
+import ProductCard from '../components/ProductCard/ProductCard';
 import { MemoryRouter } from 'react-router';
 import userEvent from '@testing-library/user-event';
 

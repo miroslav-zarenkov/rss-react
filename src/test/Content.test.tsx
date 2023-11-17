@@ -1,22 +1,28 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import Content from '../Content';
-import DataContext from '../DataContext';
+import Content from '../components/Content/Content';
+import DataContext from '../context/DataContext';
 import { MemoryRouter } from 'react-router';
-import Header from '../Header';
-import MainPage from '../MainPage';
+import Header from '../components/Header/Header';
+import MainPage from '../pages/MainPage';
 
 const mockContextOne = {
-  products: [],
+  inputValue: '',
   isButtonDisabled: false,
-  setCardsPerPage: () => {},
+  products: null,
   cardsPerPage: '',
   totalProducts: 0,
-  handleClick: () => {},
-  inputValue: '',
-  handleInput: () => {},
+  currentPage: 1,
+  setInputValue: () => {},
+  setIsButtonDisabled: () => {},
+  setProducts: () => {},
+  setCardsPerPage: () => {},
+  setTotalProducts: () => {},
+  setCurrentPage: () => {},
 };
 
 const mockContextTwo = {
+  inputValue: '',
+  isButtonDisabled: false,
   products: [
     {
       id: 1,
@@ -31,13 +37,15 @@ const mockContextTwo = {
       description: 'Description 2',
     },
   ],
-  isButtonDisabled: false,
-  setCardsPerPage: () => {},
   cardsPerPage: '1',
   totalProducts: 2,
-  handleClick: () => {},
-  inputValue: '',
-  handleInput: () => {},
+  currentPage: 1,
+  setInputValue: () => {},
+  setIsButtonDisabled: () => {},
+  setProducts: () => {},
+  setCardsPerPage: () => {},
+  setTotalProducts: () => {},
+  setCurrentPage: () => {},
 };
 
 it('should render no cards and displays not found message', async () => {

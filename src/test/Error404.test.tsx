@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import Error404 from '../Error404';
-import MainPage from '../MainPage';
-import Details from '../Details';
+import Error404 from '../components/Error404/Error404';
+import MainPage from '../pages/MainPage';
+import Details from '../components/Details/Details';
 
 it('should display Error 404 for invalid route', () => {
   render(

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import PlaceholderImage from './assets/images/placeholder_image.png';
+import PlaceholderImage from '../../assets/images/placeholder_image.png';
+import styles from './ProductCard.module.scss';
 
 interface ProductCardProps {
   product: {
@@ -13,7 +14,7 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
   return (
     <Link to={`./details/${product.id}`}>
-      <div className="product-card">
+      <div className={styles['product-card']}>
         <h3>{product.title}</h3>
         {product.thumbnail ? (
           <img src={product.thumbnail} alt={product.title} />

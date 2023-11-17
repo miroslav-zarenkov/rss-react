@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import MainPage from '../MainPage';
+import MainPage from '../pages/MainPage';
 
 const setupMyTest = () => {
   const router = createMemoryRouter(

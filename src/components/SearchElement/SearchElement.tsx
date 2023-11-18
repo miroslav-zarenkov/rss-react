@@ -15,7 +15,6 @@ const MyComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const value = inputValue.trim();
-  const isLoading = false;
   const handleClick = (page = '1') => {
     localStorage.setItem('searchInput', value);
     dispatch(setSearch(value));
@@ -42,9 +41,8 @@ const MyComponent = () => {
         className={`${styles.button} ${styles.search}`}
         onClick={() => handleClick()}
         type="button"
-        disabled={isLoading}
       >
-        {isLoading ? 'Loading...' : 'Search'}
+        Search
       </button>
     </div>
   );

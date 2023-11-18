@@ -9,6 +9,7 @@ import { useAppSelector } from '../../redux/redux';
 import { setTotalProducts } from '../../redux/totalProductsSlice';
 import { useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../redux/currentPageSlice';
+import { setIsLoadingContent } from '../../redux/isLoadingContentSlice';
 
 function Content() {
   const navigate = useNavigate();
@@ -39,6 +40,9 @@ function Content() {
       dispatch(setCurrentPage(pageNumber));
     }
   }, [dispatch, currentPage, pageNumber]);
+  useEffect(() => {
+    dispatch(setIsLoadingContent(isLoading));
+  }, [dispatch, isLoading]);
 
   if (isLoading) {
     return (

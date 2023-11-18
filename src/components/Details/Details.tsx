@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Details.module.scss';
+import { setIsLoadingDetails } from '../../redux/isLoadingDetailsSlice';
+import { useDispatch } from 'react-redux';
 
 interface DetailsData {
   title: string;
@@ -9,6 +11,7 @@ interface DetailsData {
 }
 
 function Details() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClose = () => {
     navigate('../');
@@ -16,6 +19,9 @@ function Details() {
   const [detailsData, setDetailsData] = useState<DetailsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  useEffect(() => {
+    dispatch(setIsLoadingDetails(isLoading));
+  }, [dispatch, isLoading]);
   useEffect(() => {
     const fetchData = async () => {
       try {

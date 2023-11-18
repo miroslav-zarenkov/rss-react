@@ -9,7 +9,6 @@ import { useAppSelector } from '../../redux/redux';
 
 function SearchButton() {
   const {
-    cardsPerPage,
     isButtonDisabled,
     setIsButtonDisabled,
     setTotalProducts,
@@ -19,6 +18,7 @@ function SearchButton() {
   } = useContext(DataContext);
   const dispatch = useDispatch();
   const { searchTerm } = useAppSelector((state) => state.search);
+  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
   const { pageNumber } = useParams();
   const navigate = useNavigate();
   const handleClick = async (page: string) => {

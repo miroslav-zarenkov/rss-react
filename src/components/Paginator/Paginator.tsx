@@ -2,9 +2,11 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context/DataContext';
 import styles from './Paginator.module.scss';
+import { useAppSelector } from '../../redux/redux';
 
 function Paginator() {
-  const { cardsPerPage, totalProducts, setCurrentPage, currentPage } =
+  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
+  const { totalProducts, setCurrentPage, currentPage } =
     useContext(DataContext);
   const navigate = useNavigate();
   const productsPerPage = parseInt(cardsPerPage, 10);

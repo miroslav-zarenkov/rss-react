@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchSlice from './searchSlice';
+import cardsPerPageSlice from './cardsPerPageSlice';
 
 const store = configureStore({
   reducer: {
     search: searchSlice,
+    cardsPerPage: cardsPerPageSlice,
   },
 });
 

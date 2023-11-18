@@ -7,28 +7,18 @@ import store from '../redux/store';
 import ErrorBoundary from '../providers/ErrorBoundary/ErrorBoundary';
 
 function MainPage() {
-  const [inputValue, setInputValue] = useState(
-    localStorage.getItem('searchInput') ?? ''
-  );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [products, setProducts] = useState<Product[] | null>(null);
-  const [cardsPerPage, setCardsPerPage] = useState(
-    localStorage.getItem('cardsPerPage') || '5'
-  );
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const contextValues = {
-    inputValue,
     isButtonDisabled,
     products,
-    cardsPerPage,
     totalProducts,
     currentPage,
-    setInputValue,
     setIsButtonDisabled,
     setProducts,
-    setCardsPerPage,
     setTotalProducts,
     setCurrentPage,
   };

@@ -1,20 +1,18 @@
-import { ChangeEvent, useContext, useState } from 'react';
-import DataContext from '../../context/DataContext';
+import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SelectPages.module.scss';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../redux/redux';
+import { setCardsPerPage } from '../../redux/cardsPerPageSlice';
 
 function SelectPages() {
-  const { setCardsPerPage } = useContext(DataContext);
+  const dispatch = useDispatch();
+  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
   const navigate = useNavigate();
-  const [selectedValue, setSelectedValue] = useState(
-    localStorage.getItem('cardsPerPage') || '5'
-  );
-
   const handleSelectChange = (event: ChangeEvent) => {
     const newValue = (event.target as HTMLSelectElement)?.value;
     localStorage.setItem('cardsPerPage', newValue);
-    setSelectedValue(newValue);
-    setCardsPerPage(newValue);
+    dispatch(setCardsPerPage(newValue));
     navigate(`/page/1`);
   };
 
@@ -25,7 +23,7 @@ function SelectPages() {
         id="pages"
         name="pages"
         onChange={handleSelectChange}
-        value={selectedValue}
+        value={cardsPerPage}
       >
         <option value="5">5</option>
         <option value="10">10</option>

@@ -64,3 +64,26 @@
     transform: none;
   }
 }
+
+.loader {
+  margin: auto;
+  border: 20px solid #eaf0f6;
+  border-radius: 50%;
+  border-top: 20px solid #5977ff;
+  width: 100px;
+  height: 100px;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.products {
+  display: flex;
+}

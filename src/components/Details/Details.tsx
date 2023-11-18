@@ -33,7 +33,19 @@ function Details() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className={styles.overlay} onClick={handleClose}></div>
+        <div
+          className={styles['products-details']}
+          onClick={(event) => {
+            event?.stopPropagation;
+          }}
+        >
+          <div className={styles.loader}></div>
+        </div>
+      </>
+    );
   }
 
   return (

@@ -4,7 +4,7 @@ import DataContext from '../../context/DataContext';
 import styles from './Paginator.module.scss';
 
 function Paginator() {
-  const { cardsPerPage, totalProducts, setCurrentPage } =
+  const { cardsPerPage, totalProducts, setCurrentPage, currentPage } =
     useContext(DataContext);
   const navigate = useNavigate();
   const productsPerPage = parseInt(cardsPerPage, 10);
@@ -22,6 +22,7 @@ function Paginator() {
             setCurrentPage(parseInt(page, 10));
             navigate(`/page/${page}`);
           }}
+          disabled={parseInt(page, 10) === currentPage}
         >
           Page {page}
         </button>

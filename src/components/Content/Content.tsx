@@ -1,14 +1,18 @@
 import ProductCard from '../ProductCard/ProductCard';
 import Paginator from '../Paginator/Paginator';
 import SelectPages from '../SelectPages/SelectPages';
-import { useContext, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import DataContext from '../../context/DataContext';
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styles from './Content.module.scss';
+import { useGetProductsQuery } from '../../api/apiSlice';
+import { useAppSelector } from '../../redux/redux';
+import { setTotalProducts } from '../../redux/totalProductsSlice';
+import { useDispatch } from 'react-redux';
+import { setCurrentPage } from '../../redux/currentPageSlice';
 
 function Content() {
-  const { products, isButtonDisabled } = useContext(DataContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [detailsAreClosed, setDetailsAreClosed] = useState(true);
   const handleContentClick = () => {
     if (!detailsAreClosed) {
@@ -16,14 +20,35 @@ function Content() {
       setDetailsAreClosed(true);
     }
   };
-  if (isButtonDisabled) {
+  const { searchTerm } = useAppSelector((state) => state.search);
+  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
+  const { currentPage } = useAppSelector((state) => state.currentPage);
+  const { pageNumber } = useParams();
+  const { data, isLoading } = useGetProductsQuery({
+    searchTerm,
+    cardsPerPage,
+    pageNumber: pageNumber?.toString() ?? '1',
+  });
+  useEffect(() => {
+    if (data) {
+      dispatch(setTotalProducts(data.total));
+    }
+  }, [data, dispatch]);
+  useEffect(() => {
+    if (pageNumber && currentPage !== pageNumber) {
+      dispatch(setCurrentPage(pageNumber));
+    }
+  }, [dispatch, currentPage, pageNumber]);
+
+  if (isLoading) {
     return (
       <main className={styles.main}>
         <div className={styles.loader}></div>
       </main>
     );
   }
-  if (products && products.length > 0) {
+
+  if (data?.products && data?.products.length > 0) {
     return (
       <main className={styles.main}>
         <SelectPages />
@@ -33,7 +58,7 @@ function Content() {
               className={styles['products-data']}
               onClick={handleContentClick}
             >
-              {products.map((product, index) => (
+              {data?.products.map((product, index) => (
                 <ProductCard key={index} product={product} />
               ))}
             </div>

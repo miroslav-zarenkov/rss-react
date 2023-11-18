@@ -15,7 +15,6 @@ function SelectPages() {
     dispatch(setCardsPerPage(newValue));
     navigate(`/page/1`);
   };
-
   return (
     <div className={styles['pages-selector']}>
       <label htmlFor="pages">Products per page:</label>

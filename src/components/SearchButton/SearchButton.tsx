@@ -1,41 +1,43 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DataContext from '../../context/DataContext';
 import fetchData from '../../api/fetchData';
 import styles from './SearchButton.module.scss';
+import { useDispatch } from 'react-redux';
+import { setSearch } from '../../redux/searchSlice';
+import { useAppSelector } from '../../redux/redux';
 
 function SearchButton() {
   const {
     cardsPerPage,
     isButtonDisabled,
-    inputValue,
     setIsButtonDisabled,
     setTotalProducts,
     setProducts,
     currentPage,
-    setInputValue,
+    setCurrentPage,
   } = useContext(DataContext);
+  const dispatch = useDispatch();
+  const { searchTerm } = useAppSelector((state) => state.search);
   const { pageNumber } = useParams();
   const navigate = useNavigate();
-  const handleClick = useCallback(
-    async (page: string) => {
-      setIsButtonDisabled(true);
-      localStorage.setItem('searchInput', inputValue.trim());
-      try {
-        setInputValue(inputValue.trim());
-        const data = await fetchData(page, cardsPerPage, inputValue);
-        setTotalProducts(data.total);
-        setProducts(data.products);
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setIsButtonDisabled(false);
-        navigate(`/page/${page}`);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cardsPerPage, inputValue, navigate]
-  );
+  const handleClick = async (page: string) => {
+    setIsButtonDisabled(true);
+    const value = searchTerm.trim();
+    try {
+      dispatch(setSearch(value));
+      localStorage.setItem('searchInput', value);
+      const data = await fetchData(page, cardsPerPage, value);
+      setTotalProducts(data.total);
+      setProducts(data.products);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsButtonDisabled(false);
+      setCurrentPage(parseInt(page, 10));
+      navigate(`/page/${page}`);
+    }
+  };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter') {

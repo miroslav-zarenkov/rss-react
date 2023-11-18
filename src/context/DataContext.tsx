@@ -8,13 +8,11 @@ interface Product {
 }
 
 interface DataContext {
-  inputValue: string;
   isButtonDisabled: boolean;
   products: Product[] | null;
   cardsPerPage: string;
   totalProducts: number;
   currentPage: number;
-  setInputValue: (string: string) => void;
   setIsButtonDisabled: (boolean: boolean) => void;
   setProducts: (products: Product[] | null) => void;
   setCardsPerPage: (string: string) => void;
@@ -23,13 +21,11 @@ interface DataContext {
 }
 
 const DataContext = createContext<DataContext>({
-  inputValue: '',
   isButtonDisabled: false,
   products: null,
   cardsPerPage: '',
   totalProducts: 0,
   currentPage: 1,
-  setInputValue: () => {},
   setIsButtonDisabled: () => {},
   setProducts: () => {},
   setCardsPerPage: () => {},

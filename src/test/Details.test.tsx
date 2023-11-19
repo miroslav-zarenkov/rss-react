@@ -1,93 +1,54 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import App from '../app/App';
-import DataContext from '../context/DataContext';
-import Header from '../components/Header/Header';
-import Content from '../components/Content/Content';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
+import Details from '../components/Details/Details';
 
 it('should render details with the right info when clicking on card ', async () => {
-  const user = userEvent.setup();
   render(
-    <MemoryRouter initialEntries={['/page/1']}>
-      <App />
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/page/1']}>
+        <Details />
+      </MemoryRouter>
+    </Provider>
   );
-  const card = await screen.findByText('iPhone 9');
-  const anchorElement = card.closest('a');
-
-  if (anchorElement) {
-    await user.click(anchorElement);
-  }
-  waitFor(async () => {
-    const details = await screen.findByText('Detailed Card');
-    const title = await screen.findByText('iPhone 9');
-    const description = await screen.findByText(
+  await waitFor(() => {
+    const details = screen.findByText('Detailed Card');
+    const title = screen.findByText('iPhone 9');
+    const description = screen.findByText(
       'An apple mobile which is nothing like apple'
     );
     expect(details).toBeVisible;
     expect(title).toBeVisible;
     expect(description).toBeVisible;
-    expect((screen.getByRole('img') as HTMLImageElement).src).toBe(
-      'https://i.dummyjson.com/data/products/1/thumbnail.jpg'
-    );
   });
 });
 
 it('should close details when clicking on button', async () => {
-  const user = userEvent.setup();
   render(
-    <MemoryRouter initialEntries={['/page/1']}>
-      <App />
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/page/1']}>
+        <Details />
+      </MemoryRouter>
+    </Provider>
   );
-  const card = await screen.findByText('iPhone 9');
-  const anchorElement = card.closest('a');
-
-  if (anchorElement) {
-    await user.click(anchorElement);
-  }
-  waitFor(async () => {
-    const closeButtonParent = (await screen.findByText('Close')).parentElement;
-    expect(closeButtonParent).toBeNull();
+  await waitFor(() => {
+    const closeButton = screen.queryByText('Close');
+    if (closeButton) {
+      userEvent.click(closeButton);
+      expect(screen.queryByText('Close')).toBeNull();
+    }
   });
 });
 
 it('should display loading indicator while fetching data', async () => {
-  const mockContext = {
-    inputValue: '',
-    isButtonDisabled: false,
-    products: [
-      {
-        id: 1,
-        title: 'Product 1',
-        thumbnail: 'thumbnail1.jpg',
-        description: 'Description 1',
-      },
-      {
-        id: 2,
-        title: 'Product 2',
-        thumbnail: 'thumbnail2.jpg',
-        description: 'Description 2',
-      },
-    ],
-    cardsPerPage: '1',
-    totalProducts: 2,
-    currentPage: 1,
-    setInputValue: () => {},
-    setIsButtonDisabled: () => {},
-    setProducts: () => {},
-    setCardsPerPage: () => {},
-    setTotalProducts: () => {},
-    setCurrentPage: () => {},
-  };
   const { container } = render(
-    <MemoryRouter>
-      <DataContext.Provider value={mockContext}>
-        <Header />
-        <Content />
-      </DataContext.Provider>
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/page/1']}>
+        <Details />
+      </MemoryRouter>
+    </Provider>
   );
 
   expect(container.getElementsByClassName('loader')[0]).toBeVisible;

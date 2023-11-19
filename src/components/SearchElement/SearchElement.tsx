@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setSearch } from '../../redux/searchSlice';
 import { setCurrentPage } from '../../redux/currentPageSlice';
 
-const MyComponent = () => {
+const SearchElement = () => {
   const [inputValue, setInputData] = useState('');
 
   const handleInputChange = (event: ChangeEvent) => {
@@ -48,4 +48,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default SearchElement;

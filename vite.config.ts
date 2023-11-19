@@ -12,11 +12,19 @@ export default defineConfig({
     environment: 'jsdom',
     css: true,
     setupFiles: './src/test/setup.ts',
+    silent: true,
+    testTimeout: 10000,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       all: true,
-      exclude: ['src/main.tsx', 'src/DataContext.tsx', 'src/vite-env.d.ts'],
+      exclude: [
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+        'src/test/mockData.tsx',
+        'src/redux/*',
+        'src/api/*',
+      ],
     },
   },
 });

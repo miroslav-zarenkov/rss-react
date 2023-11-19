@@ -1,13 +1,8 @@
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import App from '../app/App';
 
 it('should render main page when navigating to /page/1', () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/page/1']}>
-      <App />
-    </MemoryRouter>
-  );
-  expect(container.getElementsByClassName('header').length).toBe(1);
-  expect(container.getElementsByClassName('main').length).toBe(1);
+  const { container } = render(<App />);
+  expect(container.querySelector('header')).toBeInTheDocument();
+  expect(container.querySelector('main')).toBeInTheDocument();
 });

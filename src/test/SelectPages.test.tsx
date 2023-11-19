@@ -1,27 +1,22 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import SelectPages from '../components/SelectPages/SelectPages';
-import DataContext from '../context/DataContext';
-
-const mockContext = {
-  inputValue: '',
-  isButtonDisabled: false,
-  products: null,
-  cardsPerPage: '',
-  totalProducts: 0,
-  currentPage: 1,
-  setInputValue: () => {},
-  setIsButtonDisabled: () => {},
-  setProducts: () => {},
-  setCardsPerPage: () => {},
-  setTotalProducts: () => {},
-  setCurrentPage: () => {},
-};
+import { Provider } from 'react-redux';
+import store from '../redux/store';
+import { MemoryRouter } from 'react-router-dom';
 
 it('should renders SelectPages and update cardsPerPage', async () => {
   render(
-    <DataContext.Provider value={mockContext}>
-      <SelectPages />
-    </DataContext.Provider>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/page/1']}>
+        <SelectPages />
+      </MemoryRouter>
+    </Provider>
   );
 
   const selectElement = screen.getByLabelText(
@@ -30,11 +25,14 @@ it('should renders SelectPages and update cardsPerPage', async () => {
   expect(selectElement).toBeVisible();
   expect(selectElement.value).toBe('5');
 
-  fireEvent.change(selectElement, { target: { value: '10' } });
-
-  await waitFor(() => {
-    expect(localStorage.getItem('cardsPerPage')).toBe('10');
+  await act(async () => {
+    fireEvent.change(selectElement, { target: { value: '10' } });
+    await waitFor(() => {
+      expect(localStorage.getItem('cardsPerPage')).toBe('10');
+    });
   });
 
-  expect(selectElement.value).toBe('10');
+  await waitFor(() => {
+    expect(selectElement.value).toBe('10');
+  });
 });

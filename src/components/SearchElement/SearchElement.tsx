@@ -6,7 +6,9 @@ import { setSearch } from '../../redux/searchSlice';
 import { setCurrentPage } from '../../redux/currentPageSlice';
 
 const SearchElement = () => {
-  const [inputValue, setInputData] = useState('');
+  const [inputValue, setInputData] = useState(
+    localStorage.getItem('searchInput') ?? ''
+  );
 
   const handleInputChange = (event: ChangeEvent) => {
     setInputData((event.target as HTMLInputElement).value);

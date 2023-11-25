@@ -2,11 +2,11 @@ import { ChangeEvent } from 'react';
 import styles from './SelectPages.module.css';
 import { useRouter } from 'next/router';
 
-function SelectPages({
-  handlePerPageChange,
-}: {
+type SelectPagesProps = {
   handlePerPageChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-}) {
+};
+
+function SelectPages({ handlePerPageChange }: SelectPagesProps) {
   const router = useRouter();
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     handlePerPageChange(event);

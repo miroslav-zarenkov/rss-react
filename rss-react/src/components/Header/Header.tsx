@@ -2,11 +2,15 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 import styles from './Header.module.css';
 import SearchElement from '../SearchElement/SearchElement';
 
-function Header() {
+type HeaderProps = {
+  handleInputChange: (value: string) => void;
+};
+
+function Header({ handleInputChange }: HeaderProps) {
   return (
     <header className={styles.header}>
       <h1>Dummy Products</h1>
-      <SearchElement />
+      <SearchElement handleInputChange={handleInputChange} />
       <ErrorButton />
     </header>
   );

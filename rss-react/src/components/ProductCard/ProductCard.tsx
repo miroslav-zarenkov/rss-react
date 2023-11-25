@@ -16,9 +16,19 @@ function ProductCard({ product }: ProductCardProps) {
     <div className={styles['product-card']}>
       <h3>{product.title}</h3>
       {product.thumbnail ? (
-        <Image src={product.thumbnail} alt={product.title} />
+        <Image
+          src={product.thumbnail}
+          width={300}
+          height={300}
+          alt={product.title}
+        />
       ) : (
-        <Image src={PlaceholderImage} alt="Placeholder Image" />
+        <Image
+          src={PlaceholderImage}
+          width={300}
+          height={300}
+          alt="Placeholder Image"
+        />
       )}
       <div>{product.description}</div>
     </div>

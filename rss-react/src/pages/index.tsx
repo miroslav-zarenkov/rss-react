@@ -1,26 +1,47 @@
 import Content from '@/components/Content/Content';
 import Header from '@/components/Header/Header';
+import ErrorBoundary from '@/providers/ErrorBoundary/ErrorBoundary';
 import type { GetServerSideProps } from 'next';
 
-type Repo = {
-  name: string;
-  stargazers_count: number;
+type Product = {
+  title: string;
+  thumbnail: string;
+  description: string;
+  id: number;
 };
 
-export const getServerSideProps = (async (context) => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js');
-  const repo = await res.json();
-  return { props: { repo } };
-}) satisfies GetServerSideProps<{
-  repo: Repo;
-}>;
+type ProductProps = {
+  products: Product[];
+};
 
-const Home = ({ repo }: { repo: Repo }) => {
+export const getServerSideProps: GetServerSideProps<
+  ProductProps
+> = async () => {
+  try {
+    const res = await fetch('https://dummyjson.com/products?limit=5&skip=0');
+    const { products } = await res.json();
+    console.log(products);
+    return {
+      props: {
+        products,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {
+      props: {
+        products: [],
+      },
+    };
+  }
+};
+
+const Home = ({ products }: ProductProps) => {
   return (
-    <>
+    <ErrorBoundary>
       <Header />
-      <Content repo={repo} />
-    </>
+      <Content products={products} />
+    </ErrorBoundary>
   );
 };
 

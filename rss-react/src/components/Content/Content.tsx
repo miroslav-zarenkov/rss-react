@@ -13,9 +13,17 @@ type Product = {
 type ProductProps = {
   products: Product[];
   totalPages: number;
+  currentPage: number;
+  onPageChange: (newPage: number) => void;
 };
 
-export default function Content({ products, totalPages }: ProductProps) {
+export default function Content({
+  products,
+  totalPages,
+  currentPage,
+  onPageChange,
+}: ProductProps) {
+  console.log(products);
   if (products && products.length > 0) {
     return (
       <main className={styles.main}>
@@ -29,7 +37,11 @@ export default function Content({ products, totalPages }: ProductProps) {
             </div>
           </div>
         </div>
-        <Paginator totalPages={totalPages} />
+        <Paginator
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       </main>
     );
   }

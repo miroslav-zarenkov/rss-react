@@ -1,17 +1,16 @@
-import { useRouter } from 'next/router';
 import styles from './Paginator.module.css';
-import { usePathname, useSearchParams } from 'next/navigation';
 
-function Paginator({ totalPages }: { totalPages: number }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const currentPage = Number(searchParams.get('page')) || 1;
-  const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+type PaginatorProps = {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (newPage: number) => void;
+};
+
+const Paginator: React.FC<PaginatorProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
   const pages = Array.from({ length: totalPages }, (_, index) =>
     (index + 1).toString()
   );
@@ -21,7 +20,7 @@ function Paginator({ totalPages }: { totalPages: number }) {
         <button
           className={styles.button}
           key={page}
-          onClick={() => router.push(createPageURL(page))}
+          onClick={() => onPageChange(parseInt(page, 10))}
           disabled={parseInt(page, 10) === currentPage}
         >
           Page {page}
@@ -29,6 +28,6 @@ function Paginator({ totalPages }: { totalPages: number }) {
       ))}
     </div>
   );
-}
+};
 
 export default Paginator;

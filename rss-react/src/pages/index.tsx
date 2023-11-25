@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Content from '@/components/Content/Content';
 import Header from '@/components/Header/Header';
 import ErrorBoundary from '@/providers/ErrorBoundary/ErrorBoundary';
@@ -15,25 +17,30 @@ type ProductProps = {
   totalPages: number;
 };
 
-const page = '1';
-const cardsPerPage = '10';
+const cardsPerPage = '5';
 const inputValue = '';
 
-export const getServerSideProps: GetServerSideProps<
-  ProductProps
-> = async () => {
+export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
+  query,
+}) => {
   try {
-    const skip = (parseInt(page, 10) - 1) * parseInt(cardsPerPage, 10);
     const trimmedValue = inputValue.trim();
     const url = inputValue
-      ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=${cardsPerPage}&skip=${skip}`
-      : `https://dummyjson.com/products?limit=${cardsPerPage}&skip=${skip}`;
+      ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=100&skip=0`
+      : `https://dummyjson.com/products?limit=100&skip=0`;
     const res = await fetch(url);
-    const { products, total } = await res.json();
-    const totalPages = Math.ceil(total / parseInt(cardsPerPage, 10));
+    const { products } = await res.json();
+    const page = query.page || '1';
+    const skip =
+      (parseInt(page as string, 10) - 1) * parseInt(cardsPerPage, 10);
+    const slicedProducts = products.slice(
+      skip,
+      skip + parseInt(cardsPerPage, 10)
+    );
+    const totalPages = Math.ceil(products.length / parseInt(cardsPerPage, 10));
     return {
       props: {
-        products,
+        products: slicedProducts,
         totalPages,
       },
     };
@@ -49,10 +56,23 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 const Home = ({ products, totalPages }: ProductProps) => {
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState<number>(
+    parseInt(router.query.page as string, 10) || 1
+  );
+  const handlePageChange = (newPage: number) => {
+    router.push(`/?page=${newPage}`);
+    setCurrentPage(newPage);
+  };
   return (
     <ErrorBoundary>
       <Header />
-      <Content products={products} totalPages={totalPages} />
+      <Content
+        products={products}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </ErrorBoundary>
   );
 };

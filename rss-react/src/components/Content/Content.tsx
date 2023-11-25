@@ -12,24 +12,27 @@ type Product = {
 
 type ProductProps = {
   products: Product[];
+  totalPages: number;
 };
 
-export default function Content({ products }: ProductProps) {
-  return (
-    <main className={styles.main}>
-      <SelectPages />
-      <div className={styles['content-wrapper']}>
-        <div className={styles.products}>
-          <div className={styles['products-data']}>
-            {products.map((product, index) => (
-              <ProductCard key={index} product={product} />
-            ))}
+export default function Content({ products, totalPages }: ProductProps) {
+  if (products && products.length > 0) {
+    return (
+      <main className={styles.main}>
+        <SelectPages />
+        <div className={styles['content-wrapper']}>
+          <div className={styles.products}>
+            <div className={styles['products-data']}>
+              {products.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <Paginator />
-    </main>
-  );
+        <Paginator totalPages={totalPages} />
+      </main>
+    );
+  }
   return (
     <main className={styles.main}>
       <h2>Not Found</h2>

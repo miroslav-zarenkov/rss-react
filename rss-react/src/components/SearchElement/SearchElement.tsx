@@ -17,6 +17,12 @@ const SearchElement = ({ handleInputChange }: SearchElementProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleClick();
+    }
+  };
   return (
     <div className={styles['search-form']}>
       <input
@@ -25,6 +31,7 @@ const SearchElement = ({ handleInputChange }: SearchElementProps) => {
         className={styles['search-input']}
         value={searchValue}
         onChange={handleChange}
+        onKeyDown={(event) => handleKeyPress(event)}
       />
       <button
         className={`${styles.button} ${styles.search}`}

@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import Content from '@/components/Content/Content';
 import Header from '@/components/Header/Header';
 import ErrorBoundary from '@/providers/ErrorBoundary/ErrorBoundary';
 import type { GetServerSideProps } from 'next';
+import router from 'next/router';
 
 type Product = {
   title: string;
@@ -15,9 +14,10 @@ type Product = {
 type ProductProps = {
   products: Product[];
   totalPages: number;
+  currentPage: number;
+  cardsPerPage: number;
 };
 
-const cardsPerPage = '5';
 const inputValue = '';
 
 export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
@@ -31,17 +31,22 @@ export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
     const res = await fetch(url);
     const { products } = await res.json();
     const page = query.page || '1';
+    const cardsPerPage = query.perPage || '5';
     const skip =
-      (parseInt(page as string, 10) - 1) * parseInt(cardsPerPage, 10);
+      (parseInt(page as string, 10) - 1) * parseInt(cardsPerPage as string, 10);
     const slicedProducts = products.slice(
       skip,
-      skip + parseInt(cardsPerPage, 10)
+      skip + parseInt(cardsPerPage as string, 10)
     );
-    const totalPages = Math.ceil(products.length / parseInt(cardsPerPage, 10));
+    const totalPages = Math.ceil(
+      products.length / parseInt(cardsPerPage as string, 10)
+    );
     return {
       props: {
         products: slicedProducts,
         totalPages,
+        currentPage: parseInt(page as string, 10) || 1,
+        cardsPerPage: parseInt(cardsPerPage as string, 10) || 5,
       },
     };
   } catch (error) {
@@ -50,19 +55,25 @@ export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
       props: {
         products: [],
         totalPages: 1,
+        currentPage: 1,
+        cardsPerPage: 5,
       },
     };
   }
 };
 
-const Home = ({ products, totalPages }: ProductProps) => {
-  const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(
-    parseInt(router.query.page as string, 10) || 1
-  );
+const Home = ({
+  products,
+  totalPages,
+  currentPage,
+  cardsPerPage,
+}: ProductProps) => {
   const handlePageChange = (newPage: number) => {
-    router.push(`/?page=${newPage}`);
-    setCurrentPage(newPage);
+    router.push(`/?page=${newPage}&perPage=${cardsPerPage}`);
+  };
+  const handlePerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    router.push(`/?page=1&perPage=${selectedValue}`);
   };
   return (
     <ErrorBoundary>
@@ -72,6 +83,7 @@ const Home = ({ products, totalPages }: ProductProps) => {
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}
+        handlePerPageChange={handlePerPageChange}
       />
     </ErrorBoundary>
   );

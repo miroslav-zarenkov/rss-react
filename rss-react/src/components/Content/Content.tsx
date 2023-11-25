@@ -2,6 +2,7 @@ import styles from './Content.module.css';
 import SelectPages from '../SelectPages/SelectPages';
 import ProductCard from '../ProductCard/ProductCard';
 import Paginator from '../Paginator/Paginator';
+import { ChangeEvent } from 'react';
 
 type Product = {
   title: string;
@@ -15,6 +16,7 @@ type ProductProps = {
   totalPages: number;
   currentPage: number;
   onPageChange: (newPage: number) => void;
+  handlePerPageChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export default function Content({
@@ -22,12 +24,12 @@ export default function Content({
   totalPages,
   currentPage,
   onPageChange,
+  handlePerPageChange,
 }: ProductProps) {
-  console.log(products);
   if (products && products.length > 0) {
     return (
       <main className={styles.main}>
-        <SelectPages />
+        <SelectPages handlePerPageChange={handlePerPageChange} />
         <div className={styles['content-wrapper']}>
           <div className={styles.products}>
             <div className={styles['products-data']}>

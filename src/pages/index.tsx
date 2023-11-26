@@ -1,8 +1,9 @@
 import Content from '@/components/Content/Content';
 import Header from '@/components/Header/Header';
 import ErrorBoundary from '@/providers/ErrorBoundary/ErrorBoundary';
-import type { GetServerSideProps } from 'next';
 import router from 'next/router';
+import { dummyApi } from './api/dummyApi';
+import { wrapper } from './api/store';
 
 type Product = {
   title: string;
@@ -20,53 +21,46 @@ type ProductProps = {
   details: string;
 };
 
-export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
-  query,
-}) => {
-  try {
-    const page = (query.page as string) || '1';
-    const cardsPerPage = (query.perPage as string) || '5';
-    const inputValue = (query.inputValue as string) || '';
-    const details = (query.details as string) || '';
-    const trimmedValue = (inputValue as string).trim();
-    const url = inputValue
-      ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=100&skip=0`
-      : `https://dummyjson.com/products?limit=100&skip=0`;
-    const res = await fetch(url);
-    const { products } = await res.json();
-    const skip =
-      (parseInt(page as string, 10) - 1) * parseInt(cardsPerPage as string, 10);
-    const slicedProducts = products.slice(
-      skip,
-      skip + parseInt(cardsPerPage as string, 10)
-    );
-    const totalPages = Math.ceil(
-      products.length / parseInt(cardsPerPage as string, 10)
-    );
-    return {
-      props: {
-        products: slicedProducts,
-        totalPages,
-        currentPage: parseInt(page as string, 10) || 1,
-        cardsPerPage: parseInt(cardsPerPage as string, 10) || 5,
-        inputValue: trimmedValue,
-        details: details,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      props: {
-        products: [],
-        totalPages: 1,
-        currentPage: 1,
-        cardsPerPage: 5,
-        inputValue: '',
-        details: '',
-      },
-    };
-  }
-};
+interface ApiProps {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query }) => {
+      const page = (query.page as string) || '1';
+      const cardsPerPage = (query.perPage as string) || '5';
+      const inputValue = (query.inputValue as string) || '';
+      const details = (query.details as string) || '';
+      const trimmedValue = (inputValue as string).trim();
+      store.dispatch(
+        dummyApi.endpoints.searchProducts.initiate({
+          searchQuery: trimmedValue,
+          itemsPerPage: cardsPerPage,
+          pageNumber: page,
+        })
+      );
+      const data = await Promise.all(
+        store.dispatch(dummyApi.util.getRunningQueriesThunk())
+      );
+      const products = data.find(
+        (item) => item.endpointName === 'searchProducts'
+      )?.data as ApiProps;
+      return {
+        props: {
+          products: products.products,
+          totalPages: Math.ceil(products.total / parseInt(cardsPerPage, 10)),
+          currentPage: parseInt(page, 10),
+          cardsPerPage: parseInt(cardsPerPage, 10),
+          inputValue: trimmedValue,
+          details: details,
+        },
+      };
+    }
+);
 
 const Home = ({
   products,

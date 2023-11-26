@@ -11,7 +11,7 @@ function Paginator({ totalPages, currentPage, onPageChange }: PaginatorProps) {
     (index + 1).toString()
   );
   return (
-    <div className={styles.paginator}>
+    <div className={styles.paginator} data-testid="paginator">
       {pages.map((page) => (
         <button
           className={styles.button}

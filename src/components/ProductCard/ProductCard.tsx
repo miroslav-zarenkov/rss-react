@@ -14,7 +14,11 @@ interface ProductCardProps {
 
 function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <div className={styles['product-card']} onClick={onClick}>
+    <div
+      className={styles['product-card']}
+      onClick={onClick}
+      data-testid="product-card"
+    >
       <h3>{product.title}</h3>
       {product.thumbnail ? (
         <Image

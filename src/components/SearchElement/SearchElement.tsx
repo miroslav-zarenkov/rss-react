@@ -24,7 +24,7 @@ const SearchElement = ({ handleInputChange }: SearchElementProps) => {
     }
   };
   return (
-    <div className={styles['search-form']}>
+    <div className={styles['search-form']} data-testid="search-element">
       <input
         type="text"
         placeholder="Search Products"
@@ -32,6 +32,7 @@ const SearchElement = ({ handleInputChange }: SearchElementProps) => {
         value={searchValue}
         onChange={handleChange}
         onKeyDown={(event) => handleKeyPress(event)}
+        data-testid="search-element-input"
       />
       <button
         className={`${styles.button} ${styles.search}`}

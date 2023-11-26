@@ -8,7 +8,7 @@ type HeaderProps = {
 
 function Header({ handleInputChange }: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-testid="header">
       <h1>Dummy Products</h1>
       <SearchElement handleInputChange={handleInputChange} />
       <ErrorButton />

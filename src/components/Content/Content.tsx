@@ -57,7 +57,10 @@ function Content({
         handlePerPageChange={handlePerPageChange}
       >
         <SelectPages handlePerPageChange={handlePerPageChange} />
-        <div className={styles['content-wrapper']}>
+        <div
+          className={styles['content-wrapper']}
+          data-testid="content-wrapper"
+        >
           <div className={styles.products}>
             <div className={styles['products-data']}>
               {products.map((product, index) => (
@@ -65,6 +68,7 @@ function Content({
                   key={index}
                   product={product}
                   onClick={() => handleCardClick(product)}
+                  data-testid="product-card"
                 />
               ))}
             </div>

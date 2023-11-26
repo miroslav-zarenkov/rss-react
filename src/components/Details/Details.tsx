@@ -23,8 +23,13 @@ function Details({ product, onClose }: DetailsProps) {
         onClick={(event) => {
           event?.stopPropagation;
         }}
+        data-testid="details"
       >
-        <button className={styles.button} onClick={onClose}>
+        <button
+          className={styles.button}
+          onClick={onClose}
+          data-testid="close-details"
+        >
           Close
         </button>
         <Image

@@ -9,7 +9,11 @@ type LayoutProps = {
 };
 
 function Layout({ children }: LayoutProps) {
-  return <main className={styles.main}>{children}</main>;
+  return (
+    <main className={styles.main} data-testid="content">
+      {children}
+    </main>
+  );
 }
 
 export default Layout;

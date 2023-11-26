@@ -16,6 +16,7 @@ function ErrorButton() {
     <button
       className={`${styles.button} ${styles.error}`}
       onClick={handleClick}
+      data-testid="error-button"
     >
       Throw Error
     </button>

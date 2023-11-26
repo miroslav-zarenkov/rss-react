@@ -1,83 +1,43 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styles from './Details.module.scss';
-import { setIsLoadingDetails } from '../../redux/isLoadingDetailsSlice';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import styles from './Details.module.css';
+import Image from 'next/image';
 
-interface DetailsData {
+type Product = {
   title: string;
-  description: string;
   thumbnail: string;
-}
+  description: string;
+  id: number;
+};
 
-function Details() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleClose = () => {
-    navigate('../');
-  };
-  const [detailsData, setDetailsData] = useState<DetailsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
-  useEffect(() => {
-    dispatch(setIsLoadingDetails(isLoading));
-  }, [dispatch, isLoading]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
-        const data = await response.json();
-        setDetailsData(data);
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+type DetailsProps = {
+  product: Product;
+  onClose: () => void;
+};
 
-  if (isLoading) {
-    return (
-      <>
-        <div className={styles.overlay} onClick={handleClose}></div>
-        <div
-          className={styles['products-details']}
-          onClick={(event) => {
-            event?.stopPropagation;
-          }}
-        >
-          <div className={styles.loader}></div>
-        </div>
-      </>
-    );
-  }
-
+function Details({ product, onClose }: DetailsProps) {
   return (
     <>
-      <div className={styles.overlay} onClick={handleClose}></div>
+      <div className={styles.overlay} onClick={onClose}></div>
       <div
         className={styles['products-details']}
         onClick={(event) => {
           event?.stopPropagation;
         }}
       >
-        <h3>Detailed Card</h3>
-        {detailsData ? (
-          <div>
-            <h2>{detailsData.title}</h2>
-            <p>{detailsData.description}</p>
-            <img src={detailsData.thumbnail} alt={detailsData.title} />
-          </div>
-        ) : (
-          <div>No data available</div>
-        )}
-        <button className={styles.button} onClick={handleClose}>
+        <button className={styles.button} onClick={onClose}>
           Close
         </button>
+        <Image
+          src={product.thumbnail}
+          alt={product.title}
+          width={100}
+          height={100}
+        ></Image>
+        <h2>{product.title}</h2>
+        <p>{product.description}</p>
       </div>
     </>
   );
 }
+
 export default Details;

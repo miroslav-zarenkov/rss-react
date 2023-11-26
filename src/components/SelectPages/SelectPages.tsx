@@ -1,19 +1,15 @@
 import { ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './SelectPages.module.scss';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../redux/redux';
-import { setCardsPerPage } from '../../redux/cardsPerPageSlice';
+import styles from './SelectPages.module.css';
+import { useRouter } from 'next/router';
 
-function SelectPages() {
-  const dispatch = useDispatch();
-  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
-  const navigate = useNavigate();
-  const handleSelectChange = (event: ChangeEvent) => {
-    const newValue = (event.target as HTMLSelectElement)?.value;
-    localStorage.setItem('cardsPerPage', newValue);
-    dispatch(setCardsPerPage(newValue));
-    navigate(`/page/1`);
+type SelectPagesProps = {
+  handlePerPageChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+};
+
+function SelectPages({ handlePerPageChange }: SelectPagesProps) {
+  const router = useRouter();
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    handlePerPageChange(event);
   };
   return (
     <div className={styles['pages-selector']}>
@@ -21,8 +17,8 @@ function SelectPages() {
       <select
         id="pages"
         name="pages"
-        onChange={handleSelectChange}
-        value={cardsPerPage}
+        onChange={handleChange}
+        value={router.query.perPage || '5'}
       >
         <option value="5">5</option>
         <option value="10">10</option>

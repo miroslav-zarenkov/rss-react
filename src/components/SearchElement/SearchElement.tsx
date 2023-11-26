@@ -1,27 +1,21 @@
-import { ChangeEvent, useState } from 'react';
-import styles from './SearchElement.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setSearch } from '../../redux/searchSlice';
-import { setCurrentPage } from '../../redux/currentPageSlice';
+import { useState } from 'react';
+import styles from './SearchElement.module.css';
+import { useRouter } from 'next/router';
 
-const SearchElement = () => {
-  const [inputValue, setInputData] = useState(
-    localStorage.getItem('searchInput') ?? ''
+type SearchElementProps = {
+  handleInputChange: (value: string) => void;
+};
+
+const SearchElement = ({ handleInputChange }: SearchElementProps) => {
+  const router = useRouter();
+  const [searchValue, setSearchValue] = useState(
+    router.query.inputValue as string
   );
-
-  const handleInputChange = (event: ChangeEvent) => {
-    setInputData((event.target as HTMLInputElement).value);
+  const handleClick = () => {
+    handleInputChange(searchValue);
   };
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const value = inputValue.trim();
-  const handleClick = (page = '1') => {
-    localStorage.setItem('searchInput', value);
-    dispatch(setSearch(value));
-    dispatch(setCurrentPage(page));
-    navigate(`/page/${page}`);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
   };
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -34,15 +28,15 @@ const SearchElement = () => {
       <input
         type="text"
         placeholder="Search Products"
-        value={inputValue}
-        onChange={handleInputChange}
         className={styles['search-input']}
+        value={searchValue}
+        onChange={handleChange}
         onKeyDown={(event) => handleKeyPress(event)}
       />
       <button
         className={`${styles.button} ${styles.search}`}
-        onClick={() => handleClick()}
         type="button"
+        onClick={handleClick}
       >
         Search
       </button>

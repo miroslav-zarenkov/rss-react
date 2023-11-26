@@ -1,20 +1,40 @@
-# RS School. React.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Week 1. React. Components.
+## Getting Started
 
-1. Task: [link](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01)
-2. Screenshot:
-   ![screencapture-merry-profiterole-557f2f-netlify-app-2023-10-28-23_19_41](https://github.com/miroslav-zarenkov/rss-react/assets/60261308/1281c578-3251-4c7e-af12-554d86009ae3)
-3. Deploy: [link](https://merry-profiterole-557f2f.netlify.app/)
-4. Done 28.10.2023 / deadline 30.10.2023
-5. Score: 100 / 100
+First, run the development server:
 
-## Cross-check (100 points)
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- [x] (+15) Eslint is set up, when lint command is run it doesn't produce any errors (if there are warnings score might be less)
-- [x] (+15) Prettier is set up, format:fix command fixes issues
-- [x] (+10) Husky is set up, linting is run on pre-commit
-- [x] (+20) Page is split into 2 sections, top one has Search input and "Search" button, main section displays the list of results from the selected api when page is opened for the first time (loader should be shown while app makes a call to the api)
-- [x] (+15) When user types something to the Search input and clicks "Search" button, a loader is displayed and the list is changed according to the response results for a provided search term
-- [x] (+15) The search term typed into the Search input is saved in the local storage when user clicks on "Search" button (check it by closing the tab and open the app in the new one - the initial call should contain previously entered search term)
-- [x] (+10) Application is wrapped with ErrorBoundary, which logs error to a console and shows a fallback UI. There should be a button to throw an error
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

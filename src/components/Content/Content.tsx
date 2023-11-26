@@ -1,83 +1,91 @@
+import styles from './Content.module.css';
+import React, { useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
-import Paginator from '../Paginator/Paginator';
+import Details from '../Details/Details';
+import Layout from '../Layout/Layout';
 import SelectPages from '../SelectPages/SelectPages';
-import { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import styles from './Content.module.scss';
-import { useGetProductsQuery } from '../../api/apiSlice';
-import { useAppSelector } from '../../redux/redux';
-import { setTotalProducts } from '../../redux/totalProductsSlice';
-import { useDispatch } from 'react-redux';
-import { setCurrentPage } from '../../redux/currentPageSlice';
-import { setIsLoadingContent } from '../../redux/isLoadingContentSlice';
+import Paginator from '../Paginator/Paginator';
+import { useRouter } from 'next/router';
 
-function Content() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [detailsAreClosed, setDetailsAreClosed] = useState(true);
-  const handleContentClick = () => {
-    if (!detailsAreClosed) {
-      navigate('../');
-      setDetailsAreClosed(true);
-    }
+type Product = {
+  title: string;
+  thumbnail: string;
+  description: string;
+  id: number;
+};
+
+type ContentProps = {
+  products: Product[];
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (newPage: number) => void;
+  handlePerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleDetailsChange: (id: string) => void;
+};
+
+function Content({
+  products,
+  totalPages,
+  currentPage,
+  onPageChange,
+  handlePerPageChange,
+  handleDetailsChange,
+}: ContentProps) {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const router = useRouter();
+
+  const handleCardClick = (product: Product) => {
+    setSelectedProduct(product);
+    handleDetailsChange(product.id.toString());
   };
-  const { searchTerm } = useAppSelector((state) => state.search);
-  const { cardsPerPage } = useAppSelector((state) => state.cardsPerPage);
-  const { currentPage } = useAppSelector((state) => state.currentPage);
-  const { pageNumber } = useParams();
-  const { data, isLoading } = useGetProductsQuery({
-    searchTerm,
-    cardsPerPage,
-    pageNumber: pageNumber?.toString() ?? '1',
-  });
-  useEffect(() => {
-    if (data) {
-      dispatch(setTotalProducts(data.total));
-    }
-  }, [data, dispatch]);
-  useEffect(() => {
-    if (pageNumber && currentPage !== pageNumber) {
-      dispatch(setCurrentPage(pageNumber));
-    }
-  }, [dispatch, currentPage, pageNumber]);
-  useEffect(() => {
-    dispatch(setIsLoadingContent(isLoading));
-  }, [dispatch, isLoading]);
 
-  if (isLoading) {
-    return (
-      <main className={styles.main}>
-        <div className={styles.loader}></div>
-      </main>
-    );
-  }
+  const handleCardClose = () => {
+    setSelectedProduct(null);
+    handleDetailsChange('');
+  };
 
-  if (data?.products && data?.products.length > 0) {
+  const { details } = router.query;
+  const selectedProductById = details
+    ? products.find((product) => product.id.toString() === details)
+    : null;
+  if (products.length > 0) {
     return (
-      <main className={styles.main}>
-        <SelectPages />
-        <div className={styles['content-wrapper']} onClick={handleContentClick}>
+      <Layout
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        handlePerPageChange={handlePerPageChange}
+      >
+        <SelectPages handlePerPageChange={handlePerPageChange} />
+        <div className={styles['content-wrapper']}>
           <div className={styles.products}>
-            <div
-              className={styles['products-data']}
-              onClick={handleContentClick}
-            >
-              {data?.products.map((product, index) => (
-                <ProductCard key={index} product={product} />
+            <div className={styles['products-data']}>
+              {products.map((product, index) => (
+                <ProductCard
+                  key={index}
+                  product={product}
+                  onClick={() => handleCardClick(product)}
+                />
               ))}
             </div>
-            <Outlet />
           </div>
+          {selectedProductById && (
+            <Details product={selectedProductById} onClose={handleCardClose} />
+          )}
         </div>
-        <Paginator />
-      </main>
+        <Paginator
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
+      </Layout>
     );
   }
   return (
-    <main className={styles.main}>
+    <>
       <h2>Not Found</h2>
       <div>There is no spoon</div>
-    </main>
+    </>
   );
 }
 

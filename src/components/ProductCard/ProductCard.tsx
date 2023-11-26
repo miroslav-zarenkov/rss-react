@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import PlaceholderImage from '../../assets/images/placeholder_image.png';
-import styles from './ProductCard.module.scss';
+import styles from './ProductCard.module.css';
+import Image from 'next/image';
 
 interface ProductCardProps {
   product: {
@@ -9,21 +9,30 @@ interface ProductCardProps {
     description: string;
     id: number;
   };
+  onClick: () => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <Link to={`./details/${product.id}`}>
-      <div className={styles['product-card']}>
-        <h3>{product.title}</h3>
-        {product.thumbnail ? (
-          <img src={product.thumbnail} alt={product.title} />
-        ) : (
-          <img src={PlaceholderImage} alt="Placeholder Image" />
-        )}
-        <div>{product.description}</div>
-      </div>
-    </Link>
+    <div className={styles['product-card']} onClick={onClick}>
+      <h3>{product.title}</h3>
+      {product.thumbnail ? (
+        <Image
+          src={product.thumbnail}
+          width={300}
+          height={300}
+          alt={product.title}
+        />
+      ) : (
+        <Image
+          src={PlaceholderImage}
+          width={300}
+          height={300}
+          alt="Placeholder Image"
+        />
+      )}
+      <div>{product.description}</div>
+    </div>
   );
 }
 

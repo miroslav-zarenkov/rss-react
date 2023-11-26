@@ -8,7 +8,6 @@
   background-color: rgba(110, 118, 129, 0.4);
   cursor: pointer;
 }
-
 .products-details {
   z-index: 10;
   min-width: 400px;
@@ -18,15 +17,15 @@
   justify-content: flex-start;
   padding: 20px;
   border-radius: 10px;
-  background-color: rgba(250, 250, 250);
+  background-color: rgb(250, 250, 250);
   height: fit-content;
   gap: 10px;
-  img {
-    width: 100%;
-    height: auto;
-  }
+  margin-right: 30px;
 }
-
+.products-details img {
+  height: 150px;
+  width: auto;
+}
 .button {
   width: 120px;
   appearance: none;
@@ -46,44 +45,23 @@
   transition: background-color 0.33s cubic-bezier(0.3, 0, 0.5, 1);
   user-select: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   background-color: #f9f9f9;
-  &:hover {
-    background-color: darken(#f9f9f9, 5%);
-    transition: background-color 0.33s cubic-bezier(0.3, 0, 0.5, 1);
-  }
-  &:active {
-    background-color: #edeff2;
-    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-    transform: translateY(2px);
-  }
-  &:disabled {
-    background-color: #fafbfc;
-    border-color: rgba(27, 31, 35, 0.15);
-    color: #959da5;
-    cursor: default;
-    transform: none;
-  }
 }
-
-.loader {
-  margin: auto;
-  border: 20px solid #eaf0f6;
-  border-radius: 50%;
-  border-top: 20px solid #5977ff;
-  width: 100px;
-  height: 100px;
-  animation: spinner 1s linear infinite;
+.button:hover {
+  background-color: #ececec;
+  transition: background-color 0.33s cubic-bezier(0.3, 0, 0.5, 1);
 }
-
-@keyframes spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.button:active {
+  background-color: #edeff2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transform: translateY(2px);
 }
-
-.products {
-  display: flex;
+.button:disabled {
+  background-color: #fafbfc;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959da5;
+  cursor: default;
+  transform: none;
 }

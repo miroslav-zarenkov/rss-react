@@ -17,15 +17,17 @@ type ProductProps = {
   currentPage: number;
   cardsPerPage: number;
   inputValue: string;
+  details: string;
 };
 
 export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
   query,
 }) => {
   try {
-    const page = query.page || '1';
-    const cardsPerPage = query.perPage || '5';
-    const inputValue = query.inputValue || '';
+    const page = (query.page as string) || '1';
+    const cardsPerPage = (query.perPage as string) || '5';
+    const inputValue = (query.inputValue as string) || '';
+    const details = (query.details as string) || '';
     const trimmedValue = (inputValue as string).trim();
     const url = inputValue
       ? `https://dummyjson.com/products/search?q=${trimmedValue}&limit=100&skip=0`
@@ -48,6 +50,7 @@ export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
         currentPage: parseInt(page as string, 10) || 1,
         cardsPerPage: parseInt(cardsPerPage as string, 10) || 5,
         inputValue: trimmedValue,
+        details: details,
       },
     };
   } catch (error) {
@@ -59,6 +62,7 @@ export const getServerSideProps: GetServerSideProps<ProductProps> = async ({
         currentPage: 1,
         cardsPerPage: 5,
         inputValue: '',
+        details: '',
       },
     };
   }
@@ -78,6 +82,7 @@ const Home = ({
         page: newPage,
         perPage: cardsPerPage,
         inputValue: inputValue,
+        details: '',
       },
     });
   };
@@ -89,6 +94,7 @@ const Home = ({
         page: 1,
         perPage: selectedValue,
         inputValue: inputValue,
+        details: '',
       },
     });
   };
@@ -99,6 +105,16 @@ const Home = ({
         page: 1,
         perPage: cardsPerPage,
         inputValue: value,
+        details: '',
+      },
+    });
+  };
+  const handleDetailsChange = (id: string) => {
+    router.push({
+      pathname: '/',
+      query: {
+        ...router.query,
+        details: id,
       },
     });
   };
@@ -111,6 +127,7 @@ const Home = ({
         currentPage={currentPage}
         onPageChange={handlePageChange}
         handlePerPageChange={handlePerPageChange}
+        handleDetailsChange={handleDetailsChange}
       />
     </ErrorBoundary>
   );

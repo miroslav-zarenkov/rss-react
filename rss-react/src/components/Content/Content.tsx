@@ -1,8 +1,11 @@
 import styles from './Content.module.css';
-import SelectPages from '../SelectPages/SelectPages';
+import React, { useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
+import Details from '../Details/Details';
+import Layout from '../Layout/Layout';
+import SelectPages from '../SelectPages/SelectPages';
 import Paginator from '../Paginator/Paginator';
-import { ChangeEvent } from 'react';
+import { useRouter } from 'next/router';
 
 type Product = {
   title: string;
@@ -11,46 +14,79 @@ type Product = {
   id: number;
 };
 
-type ProductProps = {
+type ContentProps = {
   products: Product[];
   totalPages: number;
   currentPage: number;
   onPageChange: (newPage: number) => void;
-  handlePerPageChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handlePerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleDetailsChange: (id: string) => void;
 };
 
-export default function Content({
+function Content({
   products,
   totalPages,
   currentPage,
   onPageChange,
   handlePerPageChange,
-}: ProductProps) {
-  if (products && products.length > 0) {
+  handleDetailsChange,
+}: ContentProps) {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const router = useRouter();
+
+  const handleCardClick = (product: Product) => {
+    setSelectedProduct(product);
+    handleDetailsChange(product.id.toString());
+  };
+
+  const handleCardClose = () => {
+    setSelectedProduct(null);
+    handleDetailsChange('');
+  };
+
+  const { details } = router.query;
+  const selectedProductById = details
+    ? products.find((product) => product.id.toString() === details)
+    : null;
+  if (products.length > 0) {
     return (
-      <main className={styles.main}>
+      <Layout
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        handlePerPageChange={handlePerPageChange}
+      >
         <SelectPages handlePerPageChange={handlePerPageChange} />
         <div className={styles['content-wrapper']}>
           <div className={styles.products}>
             <div className={styles['products-data']}>
               {products.map((product, index) => (
-                <ProductCard key={index} product={product} />
+                <ProductCard
+                  key={index}
+                  product={product}
+                  onClick={() => handleCardClick(product)}
+                />
               ))}
             </div>
           </div>
+          {selectedProductById && (
+            <Details product={selectedProductById} onClose={handleCardClose} />
+          )}
         </div>
         <Paginator
           totalPages={totalPages}
           currentPage={currentPage}
           onPageChange={onPageChange}
         />
-      </main>
+      </Layout>
     );
   }
   return (
-    <main className={styles.main}>
+    <>
       <h2>Not Found</h2>
       <div>There is no spoon</div>
-    </main>
+    </>
   );
 }
+
+export default Content;

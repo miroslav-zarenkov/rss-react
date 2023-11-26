@@ -6,11 +6,7 @@ type PaginatorProps = {
   onPageChange: (newPage: number) => void;
 };
 
-const Paginator: React.FC<PaginatorProps> = ({
-  totalPages,
-  currentPage,
-  onPageChange,
-}) => {
+function Paginator({ totalPages, currentPage, onPageChange }: PaginatorProps) {
   const pages = Array.from({ length: totalPages }, (_, index) =>
     (index + 1).toString()
   );
@@ -28,6 +24,6 @@ const Paginator: React.FC<PaginatorProps> = ({
       ))}
     </div>
   );
-};
+}
 
 export default Paginator;

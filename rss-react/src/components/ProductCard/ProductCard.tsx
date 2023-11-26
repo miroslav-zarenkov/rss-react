@@ -9,11 +9,12 @@ interface ProductCardProps {
     description: string;
     id: number;
   };
+  onClick: () => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <div className={styles['product-card']}>
+    <div className={styles['product-card']} onClick={onClick}>
       <h3>{product.title}</h3>
       {product.thumbnail ? (
         <Image

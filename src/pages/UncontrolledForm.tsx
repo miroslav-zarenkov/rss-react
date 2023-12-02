@@ -1,5 +1,5 @@
 function UncontrolledForm() {
-  return <div>Uncontrolled Form</div>;
+  return <h1>Uncontrolled Form</h1>;
 }
 
 export default UncontrolledForm;

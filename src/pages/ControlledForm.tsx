@@ -1,5 +1,5 @@
 function ControlledForm() {
-  return <div>Controlled Form</div>;
+  return <h1>Controlled Form</h1>;
 }
 
 export default ControlledForm;

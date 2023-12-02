@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import styles from './MainPageNav.module.css';
+import styles from './NavMainPage.module.css';
 
-function MainPageNav() {
+function NavMainPage() {
   return (
     <nav>
       <ul className={styles.nav}>
-        <Link to="/uncontrolled-form" className={styles.card}>
+        <Link to="/uncontrolled" className={styles.card}>
           <li>Uncontrolled Form</li>
         </Link>
-        <Link to="/controlled-form" className={styles.card}>
+        <Link to="/controlled" className={styles.card}>
           <li>Controlled Form</li>
         </Link>
       </ul>
@@ -16,4 +16,4 @@ function MainPageNav() {
   );
 }
 
-export default MainPageNav;
+export default NavMainPage;

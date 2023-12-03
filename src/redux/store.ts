@@ -5,6 +5,7 @@ import emailSlice from './emailSlice';
 import genderSlice from './genderSlice';
 import termsSlice from './termsSlice';
 import countrySlice from './countrySlice';
+import imageSlice from './imageSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     gender: genderSlice,
     terms: termsSlice,
     countries: countrySlice,
+    image: imageSlice,
   },
 });
 

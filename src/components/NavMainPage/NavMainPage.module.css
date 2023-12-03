@@ -9,7 +9,7 @@
 .card {
   list-style-type: none;
   width: 200px;
-  height: 200px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;

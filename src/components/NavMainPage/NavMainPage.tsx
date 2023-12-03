@@ -8,7 +8,9 @@ function NavMainPage() {
   const { email } = useAppSelector((state) => state.email);
   const { gender } = useAppSelector((state) => state.gender);
   const { terms } = useAppSelector((state) => state.terms);
+  const { image } = useAppSelector((state) => state.image);
   const termsString = terms ? 'Accepted' : 'Not Accepted';
+  console.log(image);
   return (
     <nav>
       <ul className={styles.nav}>
@@ -19,6 +21,17 @@ function NavMainPage() {
           <div>Email: {email}</div>
           <div>Gender: {gender}</div>
           <div>Terms: {termsString}</div>
+          <div>
+            {image && (
+              <div>
+                <img
+                  src={image as string}
+                  alt="Uploaded"
+                  style={{ maxWidth: '180px' }}
+                />
+              </div>
+            )}
+          </div>
         </Link>
         <Link to="/controlled" className={styles.card}>
           <li>Controlled Form</li>
@@ -27,6 +40,17 @@ function NavMainPage() {
           <div>Email: {email}</div>
           <div>Gender: {gender}</div>
           <div>Terms: {termsString}</div>
+          <div>
+            {image && (
+              <div>
+                <img
+                  src={image as string}
+                  alt="Uploaded"
+                  style={{ maxWidth: '180px' }}
+                />
+              </div>
+            )}
+          </div>
         </Link>
       </ul>
     </nav>

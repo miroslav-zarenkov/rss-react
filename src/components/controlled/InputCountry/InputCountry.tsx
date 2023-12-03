@@ -1,14 +1,15 @@
+import { useAppSelector } from '../../../redux/redux';
+
 function InputCountry() {
+  const { countries } = useAppSelector((state) => state.countries);
   return (
     <div>
       <label htmlFor="country">Choose your country:</label>
       <input list="countries" name="country" id="country" />
       <datalist id="countries">
-        <option value="USA" />
-        <option value="France" />
-        <option value="Poland" />
-        <option value="Argentina" />
-        <option value="China" />
+        {countries.map((country, index) => (
+          <option key={index} value={country} />
+        ))}
       </datalist>
     </div>
   );

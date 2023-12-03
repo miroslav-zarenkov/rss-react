@@ -22,6 +22,11 @@ function NavMainPage() {
         </Link>
         <Link to="/controlled" className={styles.card}>
           <li>Controlled Form</li>
+          <div>Name: {name}</div>
+          <div>Age: {age}</div>
+          <div>Email: {email}</div>
+          <div>Gender: {gender}</div>
+          <div>Terms: {termsString}</div>
         </Link>
       </ul>
     </nav>

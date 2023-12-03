@@ -1,10 +1,10 @@
 function InputConfirmPassword() {
   return (
     <div>
-      <label htmlFor="password">Confirm Password:</label>
+      <label htmlFor="confirm-password">Confirm Password:</label>
       <input
         type="password"
-        id="password"
+        id="confirm-password"
         placeholder="Confirm your password"
       />
     </div>

@@ -10,13 +10,13 @@ import InputPassword from '../uncontrolled/InputPassword/InputPassword';
 import InputUploadPicture from '../uncontrolled/InputUploadPicture/InputUploadPicture';
 import SubmitButton from '../uncontrolled/SubmitButton/SubmitButton';
 import styles from './UncontrolledForm.module.css';
-import { setName } from '../../redux/nameSlice';
+import { setName } from '../../redux/nameSliceUncontrolled';
 import { useNavigate } from 'react-router-dom';
-import { setAge } from '../../redux/ageSlice';
+import { setAge } from '../../redux/ageSliceUncontrolled';
 import { useAppDispatch } from '../../redux/redux';
-import { setEmail } from '../../redux/emailSlice';
-import { setGender } from '../../redux/genderSlice';
-import { setTerms } from '../../redux/termsSlice';
+import { setEmail } from '../../redux/emailSliceUncontrolled';
+import { setGender } from '../../redux/genderSliceUncontrolled';
+import { setTerms } from '../../redux/termsSliceUncontrolled';
 
 import * as yup from 'yup';
 

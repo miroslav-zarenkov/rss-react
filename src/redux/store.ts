@@ -1,21 +1,33 @@
 import { configureStore } from '@reduxjs/toolkit';
-import nameSlice from './nameSlice';
-import ageSlice from './ageSlice';
-import emailSlice from './emailSlice';
-import genderSlice from './genderSlice';
-import termsSlice from './termsSlice';
+import nameSliceControlled from './nameSliceControlled';
+import ageSliceControlled from './ageSliceControlled';
+import emailSliceControlled from './emailSliceControlled';
+import genderSliceControlled from './genderSliceControlled';
+import termsSliceControlled from './termsSliceControlled';
 import countrySlice from './countrySlice';
-import imageSlice from './imageSlice';
+import imageSliceControlled from './imageSliceControlled';
+import nameSliceUncontrolled from './nameSliceUncontrolled';
+import ageSliceUncontrolled from './ageSliceUncontrolled';
+import emailSliceUncontrolled from './emailSliceUncontrolled';
+import genderSliceUncontrolled from './genderSliceUncontrolled';
+import termsSliceUncontrolled from './termsSliceUncontrolled';
+import imageSliceUncontrolled from './imageSliceUncontrolled';
 
 const store = configureStore({
   reducer: {
-    name: nameSlice,
-    age: ageSlice,
-    email: emailSlice,
-    gender: genderSlice,
-    terms: termsSlice,
+    nameControlled: nameSliceControlled,
+    ageControlled: ageSliceControlled,
+    emailControlled: emailSliceControlled,
+    genderControlled: genderSliceControlled,
+    termsControlled: termsSliceControlled,
     countries: countrySlice,
-    image: imageSlice,
+    imageControlled: imageSliceControlled,
+    nameUncontrolled: nameSliceUncontrolled,
+    ageUncontrolled: ageSliceUncontrolled,
+    emailUncontrolled: emailSliceUncontrolled,
+    genderUncontrolled: genderSliceUncontrolled,
+    termsUncontrolled: termsSliceUncontrolled,
+    imageUncontrolled: imageSliceUncontrolled,
   },
 });
 

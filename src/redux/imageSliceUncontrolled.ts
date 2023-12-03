@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-  image: string | ArrayBuffer | null;
+  imageUncontrolled: string | ArrayBuffer | null;
 };
 
 const initialState: State = {
-  image: '',
+  imageUncontrolled: '',
 };
 
 const imageSlice = createSlice({
-  name: 'image',
+  name: 'imageUncontrolled',
   initialState,
   reducers: {
     setImage: (state, action: PayloadAction<string | ArrayBuffer | null>) => {
-      state.image = action.payload;
+      state.imageUncontrolled = action.payload;
     },
   },
 });

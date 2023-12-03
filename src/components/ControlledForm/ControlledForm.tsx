@@ -10,13 +10,13 @@ import InputPassword from '../controlled/InputPassword/InputPassword';
 import InputUploadPicture from '../controlled/InputUploadPicture/InputUploadPicture';
 import SubmitButton from '../controlled/SubmitButton/SubmitButton';
 import styles from './ControlledForm.module.css';
-import { setName } from '../../redux/nameSlice';
+import { setName } from '../../redux/nameSliceControlled';
 import { useNavigate } from 'react-router-dom';
-import { setAge } from '../../redux/ageSlice';
+import { setAge } from '../../redux/ageSliceControlled';
 import { useAppDispatch } from '../../redux/redux';
-import { setEmail } from '../../redux/emailSlice';
-import { setGender } from '../../redux/genderSlice';
-import { setTerms } from '../../redux/termsSlice';
+import { setEmail } from '../../redux/emailSliceControlled';
+import { setGender } from '../../redux/genderSliceControlled';
+import { setTerms } from '../../redux/termsSliceControlled';
 
 import * as yup from 'yup';
 
@@ -48,7 +48,7 @@ const controlledFormSchema = yup.object().shape({
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .oneOf([yup.ref('password')], 'Passwords must match')
     .required('Confirm Password is required'),
 });
 

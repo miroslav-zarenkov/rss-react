@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-  gender: string;
+  genderUncontrolled: string;
 };
 
 const initialState: State = {
-  gender: '',
+  genderUncontrolled: '',
 };
 
 const genderSlice = createSlice({
-  name: 'gender',
+  name: 'genderUncontrolled',
   initialState,
   reducers: {
     setGender: (state, action: PayloadAction<string>) => {
-      state.gender = action.payload;
+      state.genderUncontrolled = action.payload;
     },
   },
 });

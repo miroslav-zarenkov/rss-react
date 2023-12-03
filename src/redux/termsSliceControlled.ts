@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-  terms: boolean;
+  termsControlled: boolean;
 };
 
 const initialState: State = {
-  terms: false,
+  termsControlled: false,
 };
 
 const termsSlice = createSlice({
-  name: 'terms',
+  name: 'termsControlled',
   initialState,
   reducers: {
     setTerms: (state, action: PayloadAction<boolean>) => {
-      state.terms = action.payload;
+      state.termsControlled = action.payload;
     },
   },
 });

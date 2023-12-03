@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setImage } from '../../../redux/imageSlice';
+import { setImage } from '../../../redux/imageSliceUncontrolled';
 
 function InputUploadPicture() {
   const dispatch = useDispatch();

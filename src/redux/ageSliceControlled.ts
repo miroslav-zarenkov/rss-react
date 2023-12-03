@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-  age: string;
+  ageControlled: string;
 };
 
 const initialState: State = {
-  age: '',
+  ageControlled: '',
 };
 
 const ageSlice = createSlice({
-  name: 'age',
+  name: 'ageControlled',
   initialState,
   reducers: {
     setAge: (state, action: PayloadAction<string>) => {
-      state.age = action.payload;
+      state.ageControlled = action.payload;
     },
   },
 });

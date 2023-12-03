@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-  email: string;
+  emailControlled: string;
 };
 
 const initialState: State = {
-  email: '',
+  emailControlled: '',
 };
 
 const emailSlice = createSlice({
-  name: 'email',
+  name: 'emailControlled',
   initialState,
   reducers: {
     setEmail: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
+      state.emailControlled = action.payload;
     },
   },
 });
